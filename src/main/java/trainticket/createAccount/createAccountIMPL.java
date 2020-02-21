@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import trainticket.AdminRole.TestListTrains;
+import trainticket.Exception.DbException;
+import trainticket.Exception.InfoMessages;
 
 public class createAccountIMPL implements createAccountDAO {
-	public int AddUser(createAccount l) {
+	public int AddUser(createAccount l) throws DbException {
 
 		try (Connection con = TestListTrains.connect();) {
 			int userid = 0;
@@ -34,13 +36,17 @@ public class createAccountIMPL implements createAccountDAO {
 				}
 				return userid;
 			}}}
+			catch (Exception e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.ADDINGACCOUNT);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 	}
 
-	public boolean checkEmail(String mail) {
+	public boolean checkEmail(String mail) throws DbException {
 		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
 			if (stmt.executeUpdate("select mail_id from user_account where mail_id = '" + mail + "'") == 0) {
 				return true;
@@ -49,12 +55,12 @@ public class createAccountIMPL implements createAccountDAO {
 			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw new DbException(InfoMessages.CONNECTION);
 
 		}
 	}
 
-	public boolean checkLogin(int userId, String Password) {
+	public boolean checkLogin(int userId, String Password) throws DbException {
 		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
 			if (stmt.executeUpdate("select user_id from user_account where user_id = " + userId) != 0) {
 				String sql = "select user_password from user_account where user_id = " + userId;
@@ -69,16 +75,21 @@ public class createAccountIMPL implements createAccountDAO {
 					}
 
 				}
+				catch (Exception e) {
+					e.printStackTrace();
+					throw new DbException(InfoMessages.LOGIN);
+				}
+				
 			}
 			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 
 	}
 
-	public boolean checkId(int userId, String emailId) {
+	public boolean checkId(int userId, String emailId) throws DbException {
 		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
 			if (stmt.executeUpdate("select user_id from user_account where user_id =" + userId) == 1) {
 				String sql = "select mail_id from user_account where user_id =" + userId;
@@ -91,16 +102,20 @@ public class createAccountIMPL implements createAccountDAO {
 					}
 
 				}
+				catch (Exception e) {
+					e.printStackTrace();
+					throw new DbException(InfoMessages.CHECKDATA);
+				}			
 			}
 			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 
 	}
 
-	public boolean changePassword(int userId, String a1) {
+	public boolean changePassword(int userId, String a1) throws DbException {
 		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
 			String sql = "update user_account set user_password='" + a1 + "' where user_id =" + userId;
 			stmt.executeUpdate(sql);
@@ -108,11 +123,12 @@ public class createAccountIMPL implements createAccountDAO {
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw new DbException(InfoMessages.CONNECTION);
+
 		}
 	}
 
-	public boolean checkPassword(int userId, String oldPassword) {
+	public boolean checkPassword(int userId, String oldPassword) throws DbException {
 		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
 			if (stmt.executeUpdate("select user_id,user_password from user_account where user_id ='" + userId
 					+ "' and user_password='" + oldPassword + "'") == 1) {
@@ -123,7 +139,8 @@ public class createAccountIMPL implements createAccountDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw new DbException(InfoMessages.CONNECTION);
+
 		}
 	}
 

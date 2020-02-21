@@ -7,9 +7,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import trainticket.Exception.DbException;
+import trainticket.Exception.InfoMessages;
+
 public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 
-	public void addTrains(AdminListOfTrains l) {
+	public void addTrains(AdminListOfTrains l) throws DbException {
 		try(Connection con = TestListTrains.connect();)
 		{
 		String sql = "insert into train_lists(train_name,train_num,Source_station,Destination_station,ticket_price,journey_date,travelling_time)values(?,?,?,?,?,?,?)";
@@ -31,14 +34,19 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		pst1.setInt(3, l.getAvailableSeats());
 		pst1.executeUpdate();
 		System.out.println("Succesfully Train_lists added");
-	}}}
+	}}
+		catch(Exception e) {
+			throw new DbException(InfoMessages.INSERTION);
+		}
+		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 	}
 
-	public void removeTrain(int trainNum) {
+	public void removeTrain(int trainNum) throws DbException {
 		try(Connection con = TestListTrains.connect();
 		Statement stmt=con.createStatement();)
 		{
@@ -51,11 +59,13 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		catch(Exception e)
         {
 			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
+
 		}
 
 	}
 
-	public void updateTimings(int trainNum, String travellingTime) {
+	public void updateTimings(int trainNum, String travellingTime) throws DbException {
 		try(Connection con = TestListTrains.connect();){
 		String sql = "update train_lists set travelling_time =? where train_num = ?";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
@@ -63,31 +73,22 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		pst.setInt(2,trainNum);
 		int rows = pst.executeUpdate();
 		System.out.println("Succesfully Train Lists updated" + rows);
-		}}
+		}
+		catch(Exception e) {
+			throw new DbException(InfoMessages.UPDATTION);
+		}
+		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
+
 		}
 
 	}
 
-	public void addPromo(String PromoCode, int discountValue){
-		try(Connection con = TestListTrains.connect();){
-		String sql = "insert into promo_table values (?,?)";
-		try(PreparedStatement pst = con.prepareStatement(sql);){
-		pst.setString(1, PromoCode);
-		pst.setInt(2, discountValue);
-		pst.executeUpdate();
-		System.out.println("Succesfully Promo Code Added...");
-		}}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 
-	}
-
-	public List<String> getSourceStation() {
+	public List<String> getSourceStation() throws DbException {
 		try(Connection con = TestListTrains.connect();
 		Statement stmt=con.createStatement();){
 		String sql = "select distinct source_station from train_lists";
@@ -99,14 +100,20 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		}
 		
 		return sourceList;
-		}}
+		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return null;
+			throw new DbException(InfoMessages.SOURCE);
+
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 	}
 
-	public List<String> getDestinationStation(){
+	public List<String> getDestinationStation() throws DbException{
 		try(Connection con = TestListTrains.connect();
 		Statement stmt=con.createStatement();){
 		String sql = "select distinct destination_station from train_lists";
@@ -119,10 +126,16 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		
 		return destinationList;
 		
-		}}
+		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return null;
+			throw new DbException(InfoMessages.DESTINATION);
+
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 
 		

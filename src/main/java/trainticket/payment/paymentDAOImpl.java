@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import trainticket.AdminRole.TestListTrains;
+import trainticket.Exception.DbException;
+import trainticket.Exception.InfoMessages;
 
 public class paymentDAOImpl implements paymentDAO {
 
 	@Override
-	public boolean paymentSuccess(int bookingId) {
+	public boolean paymentSuccess(int bookingId) throws DbException {
 		try (Connection con = TestListTrains.connect();) {
 			String sql ="update payment_status set pay_status ='paid',payment_mode='creditcard' where booking_id = ?  ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
@@ -29,15 +31,18 @@ public class paymentDAOImpl implements paymentDAO {
 
 				}
 			}
+			catch (SQLException e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.UPDATEPAYMENT);
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 		return false;
 	}
-
 	@Override
-	public boolean paymentFailure(int bookingId) {
+	public boolean paymentFailure(int bookingId) throws DbException {
 		try(Connection con = TestListTrains.connect();){
 			String sql3 = "update payment_status  set pay_status = 'failure' where booking_id =?";
 			try(PreparedStatement pst = con.prepareStatement(sql3);)
@@ -45,22 +50,29 @@ public class paymentDAOImpl implements paymentDAO {
 				pst.setInt(1,bookingId);
 				pst.executeUpdate();
 			}
-			
+			catch (SQLException e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.UPDATEPAYMENT);
+			}
 			String sql4 = "update passenger_details set booking_status = 'cancelled' where booking_id = ?";
 			try(PreparedStatement pst = con.prepareStatement(sql4);)
 			{
 				pst.setInt(1,bookingId);
 				pst.executeUpdate();
 			}
+			catch (SQLException e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.UPDATEPAYMENT);
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 		return false;
 	}
 
 	@Override
-	public int totTicPrice(int bookingId) {
+	public int totTicPrice(int bookingId) throws DbException {
 		try (Connection con = TestListTrains.connect();) {
 			String sql1 = "select tot_ticket_price from payment_status where booking_id =?";
 			try (PreparedStatement pst = con.prepareStatement(sql1);) {
@@ -75,17 +87,21 @@ public class paymentDAOImpl implements paymentDAO {
 					return price;
 				}
 	}
+			catch (SQLException e1) {
+				e1.printStackTrace();
+				throw new DbException(InfoMessages.PRICE);
+			}	
 			
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-			return 0;
+			throw new DbException(InfoMessages.CONNECTION);
 
 		}
 		
 	}
 
 	@Override
-	public boolean cashPay(int bookingId, String paymentMode) {
+	public boolean cashPay(int bookingId, String paymentMode) throws DbException {
 		
 		System.out.println("Payment Mode:" + paymentMode);
 		String paymentStatus = "pending";
@@ -110,9 +126,13 @@ public class paymentDAOImpl implements paymentDAO {
 
 				}
 			}
+			catch (SQLException e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.UPDATEPAYMENT);
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
 		}
 		return false;
 	}

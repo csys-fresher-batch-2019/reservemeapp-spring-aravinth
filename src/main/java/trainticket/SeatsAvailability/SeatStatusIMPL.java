@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import trainticket.AdminRole.TestListTrains;
+import trainticket.Exception.DbException;
+import trainticket.Exception.InfoMessages;
 
 public class SeatStatusIMPL implements SeatStatusDAO {
-	public void updatingSeats(int trainNum) {
+	public void updatingSeats(int trainNum) throws DbException {
 		 try(Connection con = TestListTrains.connect();){
 		 String sql = "update seat_availabilities set no_of_seats_available = ( tot_no_of_seats- (select sum(no_of_tickets) from passenger_details where train_num = ? and book_status = 'booked'))where train_num = ?";
 		 try(PreparedStatement pst = con.prepareStatement(sql);){
@@ -15,14 +17,21 @@ public class SeatStatusIMPL implements SeatStatusDAO {
 		   pst.setInt(2,trainNum);
 		   pst.executeUpdate();
 		   System.out.println("Successfully Available Seats Are Updated");
-		 }}
+		 }
 		 catch(Exception e)
 		 {
 			 e.printStackTrace();
+			 throw new DbException(InfoMessages.UPDATESEATS);
+		 }
+		 }
+		 catch(Exception e)
+		 {
+			 e.printStackTrace();
+			 throw new DbException(InfoMessages.CONNECTION);
 		 }
 	}
 
-	public int AvailSeats(int trainNum) {
+	public int AvailSeats(int trainNum) throws DbException {
 		try(Connection con = TestListTrains.connect();){
 		String sql ="select no_of_seats_available from seat_availabilities where train_num =?";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
@@ -34,11 +43,17 @@ public class SeatStatusIMPL implements SeatStatusDAO {
 			seats = row.getInt("no_of_seats_available");
 		}
 		return seats;
-		}}}
+		}}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return 0;
+			 throw new DbException(InfoMessages.SHOWSEATS);
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			 throw new DbException(InfoMessages.CONNECTION);
 		}
 	}
 

@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import trainticket.AdminRole.TestListTrains;
+import trainticket.Exception.DbException;
+import trainticket.Exception.InfoMessages;
 
 public class findTrainIMPL implements findTrainDAO {
 
-	public ArrayList<findTrain> SearchTrain(String sourceStation, String destinationStation, String journeyDate) {
+	public ArrayList<findTrain> SearchTrain(String sourceStation, String destinationStation, String journeyDate) throws DbException {
 		ArrayList<findTrain> trains = new ArrayList<>();
 		try (Connection con = TestListTrains.connect();) {
 		
@@ -38,11 +40,14 @@ public class findTrainIMPL implements findTrainDAO {
 				}
 
 			}
-
+			 catch (Exception e) {
+					e.printStackTrace();
+					throw new DbException(InfoMessages.FINDTRAIN);
+					}
 		} catch (Exception e) {
 			e.printStackTrace();
-			//throw new Exception("Unable to fetch trains");
-		}
+			throw new DbException(InfoMessages.CONNECTION);
+			}
 
 		return trains;
 	}

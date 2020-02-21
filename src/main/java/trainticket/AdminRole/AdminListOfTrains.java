@@ -1,7 +1,5 @@
 package trainticket.AdminRole;
 
-import javax.xml.bind.annotation.XmlInlineBinaryData;
-
 public class AdminListOfTrains {
 	@Override
 	public String toString() {
