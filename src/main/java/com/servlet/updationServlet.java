@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import trainticket.Exception.DbException;
 import trainticket.payment.paymentDAO;
 import trainticket.payment.paymentDAOImpl;
 @WebServlet("/updationServlet")
@@ -22,7 +23,12 @@ public class updationServlet extends HttpServlet {
 		//out.println("bookingId");
 		System.out.println(bookingId);
 		String paymentMode = "cash";
-		dao.cashPay(bookingId, paymentMode);
+		try {
+			dao.cashPay(bookingId, paymentMode);
+		} catch (DbException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		response.sendRedirect("index.jsp");
 		
 	}
