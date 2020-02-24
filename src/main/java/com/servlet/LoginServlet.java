@@ -28,10 +28,9 @@ public class LoginServlet extends HttpServlet {
     			String password = request.getParameter("userpassword");
     			try {
     				result=obj.checkLogin(userId, password);
-    				out.println(result);
+    				System.out.println(result);
     				if(result==true) {
     					out.println("Login Successfull");
-    	
     					HttpSession session = request.getSession();
 						session.setAttribute("LOGGED_IN_USER_ID", userId);
     					
