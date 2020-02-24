@@ -46,6 +46,10 @@ public class LoginServlet extends HttpServlet {
     			} catch (Exception e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
+					String res1 ="Invalid Userid/Password";
+    				RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp?res="+res1);
+					dispatcher.forward(request, response);
+				
     			}
 	
     }

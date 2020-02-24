@@ -21,8 +21,8 @@ public class DestinationStationServlet extends HttpServlet {
 			List<String> destinationStation = dao.getDestinationStation();
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
 
 	}
