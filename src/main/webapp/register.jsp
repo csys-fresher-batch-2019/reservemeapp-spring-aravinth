@@ -6,7 +6,7 @@
 <form action = "RegisterServlet">
 Enter username:<input type = "text" name = "username" pattern ="[A-Za-z]{3,}" placeholder = "username"required/>
 <br/>
-Enter password :<input type = "password" name ="userpassword" placeholder = "user password"required/>
+Enter password :<input type = "password" name ="userpassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder = "user password"required/>
 <br/>
 Enter gender:<input type="radio" name="gender" value="M" > Male
 <input type="radio" name="gender" value="F" > Female 
@@ -15,7 +15,7 @@ Enter gender:<input type="radio" name="gender" value="M" > Male
 Enter Date of Birth:<input type= "date" name = "birthday_date"
 placeholder = "YYYY-MM-DD" required/>
 <br/>     
-Enter contact number:<input type = "tel" name = "contact_number" placeholder = "contact number" pattern = "[0-9]{10}"required/>
+Enter contact number:<input type = "tel" name = "contact_number"  pattern = "[6-9]{1}[0-9]{9}"placeholder = "contact number" pattern = "[0-9]{10}"required/>
 <br/>
 Enter emailId:<input type ="email" name = "email_id" placeholder = "email id"required/>
 <br/>
