@@ -4,7 +4,7 @@ deploy:
   username: aravinthp1999@gmail.com
   password: Aravinth@1
   api: https://api.run.pivotal.io
-  organization: reserveme
+  organization: reservemeapp
   space: development
   manifest: manifest.yml
 script:
