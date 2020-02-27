@@ -54,6 +54,7 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		int qwert = stmt.executeUpdate(sql);
 		String sql1 = "delete  from train_lists where train_num ="+trainNum;
 		System.out.println(sql1);
+		stmt.executeUpdate(sql);
 		int sys  = stmt.executeUpdate(sql1);
 		}
 		catch(Exception e)
