@@ -15,7 +15,7 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 	public void addTrains(AdminListOfTrains l) throws DbException {
 		try(Connection con = TestListTrains.connect();)
 		{
-		String sql = "insert into train_lists(train_name,train_num,Source_station,Destination_station,ticket_price,journey_date,travelling_time)values(?,?,?,?,?,?,?)";
+		String sql = "insert into train_lists(train_name,train_num,source_station,destination_station,ticket_price,journey_date,travelling_time)values(?,?,?,?,?,?,?)";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
 		pst.setString(1, l.getTrainname());
 		pst.setInt(2, l.getTrainnum());
