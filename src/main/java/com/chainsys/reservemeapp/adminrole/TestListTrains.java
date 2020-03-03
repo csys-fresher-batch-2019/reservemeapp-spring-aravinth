@@ -12,8 +12,8 @@ public class TestListTrains {
 			System.out.println(e);
 		}
 		String server = "13.235.147.120";
-		//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@" + server + ":1521:XE", "aravinth","aravinth");
-		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
+		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@" + server + ":1521:XE", "aravinth","aravinth");
+		//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
 		System.out.println(connection);
 		return connection;
 
