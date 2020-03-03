@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import trainticket.Exception.DbException;
-import trainticket.searchingTrain.findTrain;
-import trainticket.searchingTrain.findTrainDAO;
-import trainticket.searchingTrain.findTrainIMPL;
+import com.chainsys.reservemeapp.exception.DbException;
+import com.chainsys.reservemeapp.searchingtrain.findTrain;
+import com.chainsys.reservemeapp.searchingtrain.findTrainDAO;
+import com.chainsys.reservemeapp.searchingtrain.findTrainIMPL;
 
 
 @CrossOrigin(origins="*")
