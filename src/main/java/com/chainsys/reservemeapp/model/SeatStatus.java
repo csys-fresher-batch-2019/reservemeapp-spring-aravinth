@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.seatsavailability;
+package com.chainsys.reservemeapp.model;
 
 public class SeatStatus {
 	private int trainNum;

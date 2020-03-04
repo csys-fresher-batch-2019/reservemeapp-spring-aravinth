@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.adminrole;
+package com.chainsys.reservemeapp.model;
 
 public class AdminListOfTrains {
 	@Override

@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.seatsavailability;
+package com.chainsys.reservemeapp.dao;
 
 import com.chainsys.reservemeapp.exception.DbException;
 

@@ -1,6 +1,7 @@
-package com.chainsys.reservemeapp.createaccount;
+package com.chainsys.reservemeapp.dao;
 
 import com.chainsys.reservemeapp.exception.DbException;
+import com.chainsys.reservemeapp.model.createAccount;
 
 public interface createAccountDAO {
 	public int AddUser(createAccount l) throws DbException;

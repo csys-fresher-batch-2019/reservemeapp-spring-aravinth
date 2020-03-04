@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.payment;
+package com.chainsys.reservemeapp.dao;
 
 import com.chainsys.reservemeapp.exception.DbException;
 

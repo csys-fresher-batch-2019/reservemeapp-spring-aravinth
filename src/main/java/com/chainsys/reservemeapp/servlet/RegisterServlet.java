@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.createaccount.createAccount;
-import com.chainsys.reservemeapp.createaccount.createAccountDAO;
-import com.chainsys.reservemeapp.createaccount.createAccountIMPL;
+import com.chainsys.reservemeapp.dao.createAccountDAO;
+import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
+import com.chainsys.reservemeapp.model.createAccount;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

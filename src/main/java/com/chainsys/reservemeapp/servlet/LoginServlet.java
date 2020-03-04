@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.chainsys.reservemeapp.createaccount.createAccountDAO;
-import com.chainsys.reservemeapp.createaccount.createAccountIMPL;
+import com.chainsys.reservemeapp.dao.createAccountDAO;
+import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {

@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.adminrole;
+package com.chainsys.reservemeapp.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,13 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.chainsys.reservemeapp.dao.AdminListOfTrainsDAO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.InfoMessages;
+import com.chainsys.reservemeapp.model.AdminListOfTrains;
+import com.chainsys.reservemeapp.util.TestConnection;
 
 public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 
 	public void addTrains(AdminListOfTrains l) throws DbException {
-		try(Connection con = TestListTrains.connect();)
+		try(Connection con = TestConnection.connect();)
 		{
 		String sql = "insert into train_lists(train_name,train_num,source_station,destination_station,ticket_price,journey_date,travelling_time)values(?,?,?,?,?,?,?)";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
@@ -47,7 +50,7 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 	}
 
 	public void removeTrain(int trainNum) throws DbException {
-		try(Connection con = TestListTrains.connect();
+		try(Connection con = TestConnection.connect();
 		Statement stmt=con.createStatement();)
 		{
 		String sql = "delete from seat_availabilities where train_num = "+trainNum;
@@ -67,7 +70,7 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 	}
 
 	public void updateTimings(int trainNum, String travellingTime) throws DbException {
-		try(Connection con = TestListTrains.connect();){
+		try(Connection con = TestConnection.connect();){
 		String sql = "update train_lists set travelling_time =? where train_num = ?";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
 		pst.setString(1,travellingTime);
@@ -90,7 +93,7 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 
 
 	public List<String> getSourceStation() throws DbException {
-		try(Connection con = TestListTrains.connect();
+		try(Connection con = TestConnection.connect();
 		Statement stmt=con.createStatement();){
 		String sql = "select distinct source_station from train_lists";
 		ArrayList<String> sourceList = new ArrayList<String>();
@@ -115,7 +118,7 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 	}
 
 	public List<String> getDestinationStation() throws DbException{
-		try(Connection con = TestListTrains.connect();
+		try(Connection con = TestConnection.connect();
 		Statement stmt=con.createStatement();){
 		String sql = "select distinct destination_station from train_lists";
 		ArrayList<String> destinationList = new ArrayList<String>();

@@ -1,19 +1,21 @@
-package com.chainsys.reservemeapp.searchingtrain;
+package com.chainsys.reservemeapp.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.chainsys.reservemeapp.adminrole.TestListTrains;
+import com.chainsys.reservemeapp.dao.findTrainDAO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.InfoMessages;
+import com.chainsys.reservemeapp.model.findTrain;
+import com.chainsys.reservemeapp.util.TestConnection;
 
 public class findTrainIMPL implements findTrainDAO {
 
 	public ArrayList<findTrain> SearchTrain(String sourceStation, String destinationStation, String journeyDate) throws DbException {
 		ArrayList<findTrain> trains = new ArrayList<>();
-		try (Connection con = TestListTrains.connect();) {
+		try (Connection con = TestConnection.connect();) {
 		
 
 			String sql = "select train_name,tl.train_num,ticket_price,travelling_time,no_of_seats_available from train_lists tl, seat_availabilities sa where source_station =? and destination_station= ? and  journey_date=?"

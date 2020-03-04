@@ -1,16 +1,17 @@
-package com.chainsys.reservemeapp.seatsavailability;
+package com.chainsys.reservemeapp.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import com.chainsys.reservemeapp.adminrole.TestListTrains;
+import com.chainsys.reservemeapp.dao.SeatStatusDAO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.InfoMessages;
+import com.chainsys.reservemeapp.util.TestConnection;
 
 public class SeatStatusIMPL implements SeatStatusDAO {
 	public void updatingSeats(int trainNum) throws DbException {
-		 try(Connection con = TestListTrains.connect();){
+		 try(Connection con = TestConnection.connect();){
 		 String sql = "update seat_availabilities set no_of_seats_available = ( tot_no_of_seats- (select sum(no_of_tickets) from passenger_details where train_num = ? and book_status = 'booked'))where train_num = ?";
 		 try(PreparedStatement pst = con.prepareStatement(sql);){
 		   pst.setInt(1,trainNum);
@@ -32,7 +33,7 @@ public class SeatStatusIMPL implements SeatStatusDAO {
 	}
 
 	public int AvailSeats(int trainNum) throws DbException {
-		try(Connection con = TestListTrains.connect();){
+		try(Connection con = TestConnection.connect();){
 		String sql ="select no_of_seats_available from seat_availabilities where train_num =?";
 		try(PreparedStatement pst = con.prepareStatement(sql);){
 		pst.setInt(1, trainNum);

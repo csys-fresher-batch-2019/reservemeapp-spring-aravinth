@@ -1,18 +1,20 @@
-package com.chainsys.reservemeapp.createaccount;
+package com.chainsys.reservemeapp.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import com.chainsys.reservemeapp.adminrole.TestListTrains;
+import com.chainsys.reservemeapp.dao.createAccountDAO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.InfoMessages;
+import com.chainsys.reservemeapp.model.createAccount;
+import com.chainsys.reservemeapp.util.TestConnection;
 
 public class createAccountIMPL implements createAccountDAO {
 	public int AddUser(createAccount l) throws DbException {
 
-		try (Connection con = TestListTrains.connect();) {
+		try (Connection con = TestConnection.connect();) {
 			int userid = 0;
 			String sql = "insert into user_account(user_name,user_id,user_password,gender,dob,contact_number,mail_id) values(?,user_id.nextval,?,?,?,?,?)";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
@@ -47,7 +49,7 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean checkEmail(String mail) throws DbException {
-		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
+		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
 			if (stmt.executeUpdate("select mail_id from user_account where mail_id = '" + mail + "'") == 0) {
 				return true;
 			}
@@ -61,7 +63,7 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean checkLogin(int userId, String Password) throws DbException {
-		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
+		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
 			if (stmt.executeUpdate("select user_id from user_account where user_id = " + userId) != 0) {
 				String sql = "select user_password from user_account where user_id = " + userId;
 				try (ResultSet rows = stmt.executeQuery(sql);) {
@@ -90,7 +92,7 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean checkId(int userId, String emailId) throws DbException {
-		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
+		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
 			if (stmt.executeUpdate("select user_id from user_account where user_id =" + userId) == 1) {
 				String sql = "select mail_id from user_account where user_id =" + userId;
 				try (ResultSet row = stmt.executeQuery(sql);) {
@@ -116,7 +118,7 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean changePassword(int userId, String a1) throws DbException {
-		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
+		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
 			String sql = "update user_account set user_password='" + a1 + "' where user_id =" + userId;
 			stmt.executeUpdate(sql);
 			System.out.println("Password changed succecfully");
@@ -129,7 +131,7 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean checkPassword(int userId, String oldPassword) throws DbException {
-		try (Connection con = TestListTrains.connect(); Statement stmt = con.createStatement();) {
+		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
 			if (stmt.executeUpdate("select user_id,user_password from user_account where user_id ='" + userId
 					+ "' and user_password='" + oldPassword + "'") == 1) {
 				return true;

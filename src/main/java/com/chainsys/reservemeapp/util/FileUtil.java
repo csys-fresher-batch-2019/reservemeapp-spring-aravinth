@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.adminrole;
+package com.chainsys.reservemeapp.util;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,19 +1,20 @@
-package com.chainsys.reservemeapp.payment;
+package com.chainsys.reservemeapp.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.chainsys.reservemeapp.adminrole.TestListTrains;
+import com.chainsys.reservemeapp.dao.paymentDAO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.InfoMessages;
+import com.chainsys.reservemeapp.util.TestConnection;
 
 public class paymentDAOImpl implements paymentDAO {
 
 	@Override
 	public boolean paymentSuccess(int bookingId) throws DbException {
-		try (Connection con = TestListTrains.connect();) {
+		try (Connection con = TestConnection.connect();) {
 			String sql ="update payment_status set pay_status ='paid',payment_mode='creditcard' where booking_id = ?  ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
 				pst.setInt(1,bookingId );
@@ -43,7 +44,7 @@ public class paymentDAOImpl implements paymentDAO {
 	}
 	@Override
 	public boolean paymentFailure(int bookingId) throws DbException {
-		try(Connection con = TestListTrains.connect();){
+		try(Connection con = TestConnection.connect();){
 			String sql3 = "update payment_status  set pay_status = 'failure' where booking_id =?";
 			try(PreparedStatement pst = con.prepareStatement(sql3);)
 			{
@@ -73,7 +74,7 @@ public class paymentDAOImpl implements paymentDAO {
 
 	@Override
 	public int totTicPrice(int bookingId) throws DbException {
-		try (Connection con = TestListTrains.connect();) {
+		try (Connection con = TestConnection.connect();) {
 			String sql1 = "select tot_ticket_price from payment_status where booking_id =?";
 			try (PreparedStatement pst = con.prepareStatement(sql1);) {
 				pst.setInt(1, bookingId);
@@ -105,7 +106,7 @@ public class paymentDAOImpl implements paymentDAO {
 		
 		System.out.println("Payment Mode:" + paymentMode);
 		String paymentStatus = "pending";
-		try (Connection con = TestListTrains.connect();) {
+		try (Connection con = TestConnection.connect();) {
 			String sql ="update payment_status set pay_status =?, payment_mode=? where booking_id = ?  ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
 				pst.setString(1, paymentStatus);

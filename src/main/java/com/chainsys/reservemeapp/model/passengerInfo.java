@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.passengerinfo;
+package com.chainsys.reservemeapp.model;
 
 public class passengerInfo {
 	private int trainNum;

@@ -1,8 +1,9 @@
-package com.chainsys.reservemeapp.passengerinfo;
+package com.chainsys.reservemeapp.dao;
 
 import java.util.ArrayList;
 
 import com.chainsys.reservemeapp.exception.DbException;
+import com.chainsys.reservemeapp.model.passengerInfo;
 
 public interface passengerInfoDAO {
 	public int addPassenger(passengerInfo p1) throws DbException; 

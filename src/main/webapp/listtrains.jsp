@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@page import="com.chainsys.reservemeapp.searchingtrain.findTrain"%>
+<%@page import="com.chainsys.reservemeapp.model.findTrain"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.chainsys.reservemeapp.searchingtrain.findTrainIMPL"%>
-<%@page import="com.chainsys.reservemeapp.searchingtrain.findTrainDAO"%>
-<%@page import="com.chainsys.reservemeapp.adminrole.AdminListOfTrainsDAO"%>
+<%@page import="com.chainsys.reservemeapp.dao.impl.findTrainIMPL"%>
+<%@page import="com.chainsys.reservemeapp.dao.findTrainDAO"%>
+<%@page import="com.chainsys.reservemeapp.dao.AdminListOfTrainsDAO"%>
 
 <!DOCTYPE html>
 <html>

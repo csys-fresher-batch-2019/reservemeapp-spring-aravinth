@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.createaccount;
+package com.chainsys.reservemeapp.model;
 public class createAccount {
 
 		private String userName;

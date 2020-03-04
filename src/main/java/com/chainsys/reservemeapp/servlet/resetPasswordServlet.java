@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.createaccount.createAccountDAO;
-import com.chainsys.reservemeapp.createaccount.createAccountIMPL;
+import com.chainsys.reservemeapp.dao.createAccountDAO;
+import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
 
 @WebServlet("/resetPasswordServlet")
 public class resetPasswordServlet extends HttpServlet {

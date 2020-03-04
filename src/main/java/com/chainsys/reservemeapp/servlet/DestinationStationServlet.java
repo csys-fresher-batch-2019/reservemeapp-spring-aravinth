@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.adminrole.AdminListOfTrainsDAO;
-import com.chainsys.reservemeapp.adminrole.AdminListOfTrainsImpl;
+import com.chainsys.reservemeapp.dao.AdminListOfTrainsDAO;
+import com.chainsys.reservemeapp.dao.impl.AdminListOfTrainsImpl;
 @WebServlet("/DestinationStationServlet")
 public class DestinationStationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

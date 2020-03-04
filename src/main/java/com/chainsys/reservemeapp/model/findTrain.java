@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.searchingtrain;
+package com.chainsys.reservemeapp.model;
 
 public class findTrain {
 		private int train_num;

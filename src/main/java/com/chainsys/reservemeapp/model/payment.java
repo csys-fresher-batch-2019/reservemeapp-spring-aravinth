@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.payment;
+package com.chainsys.reservemeapp.model;
 
 public class payment {
 	private int trainNum;

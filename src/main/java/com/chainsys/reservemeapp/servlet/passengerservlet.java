@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.chainsys.reservemeapp.passengerinfo.passengerInfo;
-import com.chainsys.reservemeapp.passengerinfo.passengerInfoDAO;
-import com.chainsys.reservemeapp.passengerinfo.passengerInfoIMPL;
-import com.chainsys.reservemeapp.payment.paymentDAO;
-import com.chainsys.reservemeapp.payment.paymentDAOImpl;
+import com.chainsys.reservemeapp.dao.passengerInfoDAO;
+import com.chainsys.reservemeapp.dao.paymentDAO;
+import com.chainsys.reservemeapp.dao.impl.passengerInfoIMPL;
+import com.chainsys.reservemeapp.dao.impl.paymentDAOImpl;
+import com.chainsys.reservemeapp.model.passengerInfo;
 @WebServlet("/passengerservlet")
 public class passengerservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

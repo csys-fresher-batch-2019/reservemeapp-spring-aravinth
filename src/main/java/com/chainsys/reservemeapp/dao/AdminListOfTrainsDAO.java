@@ -1,8 +1,9 @@
-package com.chainsys.reservemeapp.adminrole;
+package com.chainsys.reservemeapp.dao;
 
 import java.util.List;
 
 import com.chainsys.reservemeapp.exception.DbException;
+import com.chainsys.reservemeapp.model.AdminListOfTrains;
 
 public interface AdminListOfTrainsDAO {
 	

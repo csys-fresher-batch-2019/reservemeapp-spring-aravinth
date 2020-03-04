@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.chainsys.reservemeapp.dao.paymentDAO;
+import com.chainsys.reservemeapp.dao.impl.paymentDAOImpl;
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.payment.paymentDAO;
-import com.chainsys.reservemeapp.payment.paymentDAOImpl;
 @WebServlet("/updationServlet")
 public class updationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

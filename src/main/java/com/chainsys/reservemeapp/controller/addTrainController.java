@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chainsys.reservemeapp.adminrole.AdminListOfTrains;
-import com.chainsys.reservemeapp.adminrole.AdminListOfTrainsDAO;
-import com.chainsys.reservemeapp.adminrole.AdminListOfTrainsImpl;
+import com.chainsys.reservemeapp.dao.AdminListOfTrainsDAO;
+import com.chainsys.reservemeapp.dao.impl.AdminListOfTrainsImpl;
 import com.chainsys.reservemeapp.exception.DbException;
+import com.chainsys.reservemeapp.model.AdminListOfTrains;
 
 @CrossOrigin(origins = "*")
 @RestController
