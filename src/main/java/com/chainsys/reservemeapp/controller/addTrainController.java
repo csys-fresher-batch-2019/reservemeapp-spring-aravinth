@@ -40,4 +40,15 @@ public class addTrainController {
 		}
 
 	}
+		@PostMapping("/deletetrains")
+		public void deleteTrains(@RequestParam("trainnum")int trainNum)
+		{
+			AdminListOfTrainsDAO dao = new AdminListOfTrainsImpl();
+	        try {
+				dao.removeTrain(trainNum);
+			} catch (DbException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }
