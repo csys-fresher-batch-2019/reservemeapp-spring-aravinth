@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.chainsys.reservemeapp.dao.createAccountDAO;
 import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
+import com.chainsys.reservemeapp.service.CreateAccountService;
 
 
 @WebServlet("/forgetPasswordServle")
@@ -18,7 +19,8 @@ public class forgetPasswordServle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			createAccountDAO dao =new createAccountIMPL();
+			//createAccountDAO dao =new createAccountIMPL();
+			CreateAccountService dao = new CreateAccountService();
 			String userid=request.getParameter("userid");
 			     int userId=Integer.parseInt(userid);
 			  String mailId = request.getParameter("mailid");

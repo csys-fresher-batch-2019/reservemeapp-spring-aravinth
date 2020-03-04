@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.chainsys.reservemeapp.dao.createAccountDAO;
-import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
+import com.chainsys.reservemeapp.service.CreateAccountService;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -20,7 +19,8 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		createAccountDAO obj = new createAccountIMPL();
+		//createAccountDAO obj = new createAccountIMPL();
+		CreateAccountService obj = new CreateAccountService();
 		String userId1 = request.getParameter("userid");
 		int userId = Integer.parseInt(userId1);
 		boolean result = false;

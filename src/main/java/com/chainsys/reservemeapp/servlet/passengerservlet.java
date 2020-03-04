@@ -16,12 +16,14 @@ import com.chainsys.reservemeapp.dao.paymentDAO;
 import com.chainsys.reservemeapp.dao.impl.passengerInfoIMPL;
 import com.chainsys.reservemeapp.dao.impl.paymentDAOImpl;
 import com.chainsys.reservemeapp.model.passengerInfo;
+import com.chainsys.reservemeapp.service.PassengerInfoService;
 @WebServlet("/passengerservlet")
 public class passengerservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		passengerInfoDAO dao = new passengerInfoIMPL();
+		//passengerInfoDAO dao = new passengerInfoIMPL();
+		PassengerInfoService dao = new PassengerInfoService();
 		 passengerInfo p1 = new passengerInfo(); 
 		 paymentDAO dao1 = new paymentDAOImpl();
 			PrintWriter out=response.getWriter();
