@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//createAccountDAO obj = new createAccountIMPL();
+	  // createAccountDAO obj = new createAccountIMPL();	
 		CreateAccountService obj = new CreateAccountService();
 		String userId1 = request.getParameter("userid");
 		int userId = Integer.parseInt(userId1);
@@ -37,13 +37,13 @@ public class LoginServlet extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("choice.jsp");
 				dispatcher.forward(request, response);
 			} else {
-				String res1 = "Invalid Userid/Password";
+				String res1 = "Invalid UserId/Password";
 				RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp?res=" + res1);
 				dispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			String res1 = "Invalid Userid/Password";
+			String res1 = "Invalid";
 			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp?res=" + res1);
 			dispatcher.forward(request, response);
 

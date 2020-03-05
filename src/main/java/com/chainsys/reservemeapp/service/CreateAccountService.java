@@ -14,19 +14,19 @@ public class CreateAccountService {
 		return obj.AddUser(l);
 	}
 	public boolean checkEmail(String mail) throws DbException {
-		return false;
+		return obj.checkEmail(mail);
 	}
 	public boolean checkLogin(int userId,String Password) throws DbException {
-		return false;
+		return obj.checkLogin(userId, Password);
 	}
     public boolean checkId(int userId,String emailId) throws DbException {
-		return false;
+		return obj.checkId(userId, emailId);
 	}
     public boolean changePassword(int userId,String a1) throws DbException {
-		return false;
+		return obj.changePassword(userId, a1);
 	}
     public boolean checkPassword(int userId,String oldPassword)throws DbException {
-		return false;
+		return obj.checkPassword(userId, oldPassword);
 	}
 
 
