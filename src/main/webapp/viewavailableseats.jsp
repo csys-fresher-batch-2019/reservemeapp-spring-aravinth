@@ -25,10 +25,10 @@
 <h2><center>Available Seats
 <br/>
 <%
-String Trainnum = request.getParameter("trainNum");
+String Trainnum = request.getAttribute("trainno").toString();
 int trainnum = Integer.parseInt(Trainnum);
-SeatStatusDAO dao = new SeatStatusIMPL();
-int seatsCount = dao.AvailSeats(trainnum);
+String seats = request.getAttribute("seats").toString();
+int seatsCount = Integer.parseInt(seats);
 out.println(seatsCount);
 %>
 </center></h2>

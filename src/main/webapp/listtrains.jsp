@@ -25,14 +25,7 @@
 <br/>
 
 <%
-
-String source =  request.getParameter("source");
-String destination = request.getParameter("destination");
-String journeyDate = request.getParameter("journey_date");
-findTrainDAO dao = new findTrainIMPL();
-//ArrayList<findTrain> list= dao.SearchTrain("chennai", "covai", "2020-01-27");
-ArrayList<findTrain> list= dao.SearchTrain(source,destination,journeyDate);
-
+ArrayList<findTrain> list= (ArrayList <findTrain>)request.getAttribute("trainList");
 %>
 
 
@@ -55,14 +48,14 @@ for(findTrain f : list){%>
 <td><%=f.getTrain_num()%></td>
 <td><%= f.getPrice()%></td>
 <td><%= f.getTravelling_time()%></td>
-<td><a href="viewavailableseats.jsp?trainNum=<%=f.getTrain_num()%>">view Seats</a></tr></center>
+<td><a href="AvailableSeatsServlet?trainNum=<%=f.getTrain_num()%>">view Seats</a></tr></center>
 <% 
 }}else{
 %>
 <center>
 <h1>No Trains Are Available...</br>Try Another Date</h1>
 </br>
-<h2><center><a href = "findtrain.jsp"><button>Click To Back</button></a></center></h2>
+<h2><center><a href = "FindTrainServlet"><button>Click To Back</button></a></center></h2>
 
 </center>
 

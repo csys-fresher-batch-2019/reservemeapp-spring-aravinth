@@ -23,19 +23,17 @@
 			<%=userid%></h2>
 	</div>
 	<br />
-	<form action="listtrains.jsp">
+	<form action="ListTrainServlet">
 		<h2>
 			<center>Enter Your Specifications to find the Train...</center>
 		</h2>
 		<br /> <br />
 		<%
-			AdminListOfTrainsDAO dao = new AdminListOfTrainsImpl();
-		//AdminListOfTrainsService dao = new AdminListOfTrainsService();
-			List<String> sourceStationList = dao.getSourceStation();
+			List<String> sourceStationList = (List <String>)request.getAttribute("fromLocation");
 		%>
 		<br>
 		<%
-			List<String> destinationStationList = dao.getDestinationStation();
+			List<String> destinationStationList =  (List <String>)request.getAttribute("toLocation");
 		%>
 		<h2>
 			<center>

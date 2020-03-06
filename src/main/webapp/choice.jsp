@@ -21,7 +21,7 @@
 <br/>
 <br/>
 <br/>
-<center><h2><a href="findtrain.jsp">Book a Ticket</a></h2> </center>
+<center><h2><a href="FindTrainServlet">Book a Ticket</a></h2> </center>
 <br/>
 <br/>
 <center><h2>or</h2></center>
