@@ -64,12 +64,15 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean checkEmail(String mail) throws DbException {
-		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
-			if (stmt.executeUpdate("select mail_id from user_account where mail_id = '" + mail + "'") == 0) {
-				return true;
-			}
+		try (Connection con = TestConnection.connect();) {
+			String sql = "select mail_id from user_account where mail_id =?";
+			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
+				if (pst1.executeUpdate() == 0) {
+					return true;
+				}
 
-			return false;
+				return false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION);
@@ -79,17 +82,21 @@ public class createAccountIMPL implements createAccountDAO {
 
 	public boolean checkLogin(int userId, String Password) throws DbException {
 		boolean res = false;
-		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
-			String sql = "select user_id,user_password from user_account where user_id = " + userId+ " and user_password='" + Password+"'";
-			try (ResultSet rows = stmt.executeQuery(sql);) {
-				if (rows.next()) {
-					res = true;
-				} 
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.LOGIN);
-			}
+		try (Connection con = TestConnection.connect();) {
+			String sql = "select user_id,user_password from user_account where user_id = ?and user_password=?";
+			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
+				pst1.setInt(1, userId);
+				pst1.setString(2, Password);
+				try (ResultSet rows = pst1.executeQuery();) {
+					if (rows.next()) {
+						res = true;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new DbException(InfoMessages.LOGIN);
+				}
 
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION);
@@ -99,20 +106,23 @@ public class createAccountIMPL implements createAccountDAO {
 
 	public boolean checkId(int userId, String emailId) throws DbException {
 		boolean res = false;
-		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
-			String sql = "select user_id,mail_id from user_account where user_id = " + userId + " and mail_id='"
-					+ emailId+"'";
-			try (ResultSet rows = stmt.executeQuery(sql);) {
-				if (rows.next()) {
-					res = true;
-				} else {
-					return false;
+		try (Connection con = TestConnection.connect();) {
+			String sql = "select user_id,mail_id from user_account where user_id = ? and mail_id=?";
+			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
+				pst1.setInt(1, userId);
+				pst1.setString(2, emailId);
+				try (ResultSet rows = pst1.executeQuery();) {
+					if (rows.next()) {
+						res = true;
+					} else {
+						return false;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new DbException(InfoMessages.LOGIN);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.LOGIN);
-			}
 
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION);
@@ -121,11 +131,15 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean changePassword(int userId, String newPassword) throws DbException {
-		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
-			String sql = "update user_account set user_password='" + newPassword + "' where user_id =" + userId;
-			stmt.executeUpdate(sql);
-			System.out.println("Password changed succecfully");
-			return true;
+		try (Connection con = TestConnection.connect();) {
+			String sql = "update user_account set user_password=? where user_id =?";
+			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
+				pst1.setString(1, newPassword);
+				pst1.setInt(2, userId);
+				pst1.executeUpdate();
+				System.out.println("Password changed succecfully");
+				return true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION);
@@ -134,13 +148,17 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean checkPassword(int userId, String oldPassword) throws DbException {
-		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
-			if (stmt.executeUpdate("select user_id,user_password from user_account where user_id ='" + userId
-					+ "' and user_password='" + oldPassword + "'") == 1) {
-				return true;
-			} else {
-				System.out.println("Invalid User id or password");
-				return false;
+		try (Connection con = TestConnection.connect();) {
+			String sql = "select user_id,user_password from user_account where user_id =?and user_password=?";
+			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
+				pst1.setInt(1, userId);
+				pst1.setString(2, oldPassword);
+				if (pst1.executeUpdate() == 1) {
+					return true;
+				} else {
+					System.out.println("Invalid User id or password");
+					return false;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

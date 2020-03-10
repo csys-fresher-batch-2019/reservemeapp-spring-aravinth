@@ -47,10 +47,14 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 
 	private void updatePaymentSts(int trainNum, int totTicketPrice, int bookingId, int userId) throws DbException {
 		try (Connection con = TestConnection.connect();) {
-			try (Statement stmt1 = con.createStatement();) {
-				String sql22 = "insert into payment_status(train_num,user_id,booking_id,tot_ticket_price)values("
-						+ trainNum + "," + userId + "," + bookingId + "," + totTicketPrice + ")";
-				stmt1.executeUpdate(sql22);
+			//try (Statement stmt1 = con.createStatement();) {
+				String sql22 = "insert into payment_status(train_num,user_id,booking_id,tot_ticket_price)values(?,?,?,?)";
+				try (PreparedStatement pst = con.prepareStatement(sql22);) {
+					pst.setInt(1, trainNum);
+					pst.setInt(2, userId);
+					pst.setInt(3, bookingId);
+					pst.setInt(4, totTicketPrice);
+				pst.executeUpdate();
 				con.close();
 				// return bookingId;
 			} catch (Exception e) {
@@ -68,9 +72,10 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 	public int showBookingId(int userId) throws DbException {
 		int bookingId = 0;
 		try (Connection con = TestConnection.connect();) {
-			try (Statement stmt = con.createStatement();) {
-				String sql1 = "select max(booking_id) as id from passenger_details where user_id =" + userId;
-				try (ResultSet rows = stmt.executeQuery(sql1);) {
+				String sql1 = "select max(booking_id) as id from passenger_details where user_id =?";
+				try (PreparedStatement pst = con.prepareStatement(sql1);) {
+					pst.setInt(1, userId);
+				try (ResultSet rows = pst.executeQuery();) {
 					rows.next();
 					bookingId = rows.getInt("id");
 					con.close();
@@ -85,8 +90,6 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION);
 		}
-		// return 0;
-		// return userId;
 		return bookingId;
 	}
 

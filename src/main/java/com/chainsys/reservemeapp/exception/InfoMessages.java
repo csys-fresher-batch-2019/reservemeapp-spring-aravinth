@@ -22,5 +22,7 @@ public class InfoMessages {
 	public static final String FINDTRAIN = "Unable to Find Train lists";
 	public static final String UPDATESEATS = "Unable to Update the Train Seats";
 	public static final String SHOWSEATS = "Unable to Show Train Seats";
+    public static final String DELETESEATS = "Unable to delete Train Seats";
+    public static final String DELETETRAINS = "Unable to delete Train";
 
 }
