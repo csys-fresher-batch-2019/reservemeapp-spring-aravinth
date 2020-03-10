@@ -6,5 +6,5 @@ import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.model.findTrain;
 
 public interface findTrainDAO {
-	public ArrayList<findTrain>SearchTrain(String a,String b,String c) throws DbException;
+	public ArrayList<findTrain> SearchTrain(String a, String b, String c) throws DbException;
 }

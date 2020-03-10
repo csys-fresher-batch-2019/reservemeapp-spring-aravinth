@@ -13,15 +13,18 @@ import com.chainsys.reservemeapp.dao.createAccountDAO;
 import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
 import com.chainsys.reservemeapp.model.createAccount;
 import com.chainsys.reservemeapp.service.CreateAccountService;
+
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out=response.getWriter();
-		//createAccountDAO dao = new createAccountIMPL();
-		//Calling Method Using Service Layer
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		// createAccountDAO dao = new createAccountIMPL();
+		// Calling Method Using Service Layer
 		CreateAccountService dao = new CreateAccountService();
-		createAccount l = new createAccount ();
+		createAccount l = new createAccount();
 		l.setUserName(request.getParameter("username"));
 		l.setUserPassword(request.getParameter("userpassword"));
 		l.setGender(request.getParameter("gender"));
@@ -31,8 +34,8 @@ public class RegisterServlet extends HttpServlet {
 		l.setMailId(request.getParameter("email_id"));
 		try {
 			int userId = dao.AddUser(l);
-			out.println("userId = "+userId);
-		
+			out.println("userId = " + userId);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

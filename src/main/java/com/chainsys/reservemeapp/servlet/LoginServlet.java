@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	  // createAccountDAO obj = new createAccountIMPL();	
+		// createAccountDAO obj = new createAccountIMPL();
 		CreateAccountService obj = new CreateAccountService();
 		String userId1 = request.getParameter("userid");
 		int userId = Integer.parseInt(userId1);

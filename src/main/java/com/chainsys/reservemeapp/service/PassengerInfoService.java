@@ -12,24 +12,29 @@ import com.chainsys.reservemeapp.model.passengerInfo;
 @Service
 public class PassengerInfoService {
 	passengerInfoDAO obj = new passengerInfoIMPL();
+
 	public int addPassenger(passengerInfo p1) throws DbException {
 		return obj.addPassenger(p1);
-	} 
+	}
+
 	public ArrayList<passengerInfo> BookingDetails(int bookingId) throws DbException {
 		return obj.BookingDetails(bookingId);
 	}
+
 	public int totalPrice(int bookingId) throws DbException {
 		return obj.totalPrice(bookingId);
 	}
+
 	public boolean validateBookingId(int bookingId) throws DbException {
 		return obj.validateBookingId(bookingId);
 	}
+
 	public boolean validateTrainNum(int trainNum) throws DbException {
 		return obj.validateTrainNum(trainNum);
 	}
-	public ArrayList<passengerInfo>ticketDetails(int userId) throws DbException {
+
+	public ArrayList<passengerInfo> ticketDetails(int userId) throws DbException {
 		return obj.ticketDetails(userId);
 	}
-
 
 }

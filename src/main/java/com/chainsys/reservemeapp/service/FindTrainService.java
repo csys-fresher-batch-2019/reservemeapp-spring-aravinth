@@ -12,10 +12,9 @@ import com.chainsys.reservemeapp.model.findTrain;
 @Service
 public class FindTrainService {
 	findTrainDAO obj = new findTrainIMPL();
-	public ArrayList<findTrain>SearchTrain(String a,String b,String c) throws DbException {
+
+	public ArrayList<findTrain> SearchTrain(String a, String b, String c) throws DbException {
 		return obj.SearchTrain(a, b, c);
 	}
-
-	
 
 }

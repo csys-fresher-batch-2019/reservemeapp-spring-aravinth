@@ -6,10 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileUtil {
-	public static void writeToFile(String fileName, String content) throws IOException{
-		Path path  = Paths.get(fileName);
+	public static void writeToFile(String fileName, String content) throws IOException {
+		Path path = Paths.get(fileName);
 		byte[] bytes = content.getBytes();
-		Files.write(path,bytes);
+		Files.write(path, bytes);
 	}
 
 }

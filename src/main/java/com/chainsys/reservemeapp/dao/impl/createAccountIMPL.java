@@ -13,9 +13,8 @@ import com.chainsys.reservemeapp.util.TestConnection;
 
 public class createAccountIMPL implements createAccountDAO {
 	public int AddUser(createAccount l) throws DbException {
-
+		int userId = 0;
 		try (Connection con = TestConnection.connect();) {
-			int userid = 0;
 			String sql = "insert into user_account(user_name,user_id,user_password,gender,dob,contact_number,mail_id) values(?,user_id.nextval,?,?,?,?,?)";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
 				pst.setString(1, l.getUserName());
@@ -26,19 +25,35 @@ public class createAccountIMPL implements createAccountDAO {
 				pst.setLong(5, l.getContactNumber());
 				pst.setString(6, l.getMailId());
 				pst.executeUpdate();
+				String mailId = l.getMailId();
+				userId = showUserId(mailId);
 				System.out.println("Succesfully Account created");
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.ADDINGACCOUNT);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION);
+		}
+		return userId;
+	}
 
-				String sql1 = "select user_id from user_account where mail_id = ?";
-				try(PreparedStatement pst1 = con.prepareStatement(sql1);){
-				pst1.setString(1, l.getMailId());
-				try(ResultSet rows = pst1.executeQuery();){
-				System.out.println(rows);
-				if (rows.next()) {
-					userid = rows.getInt("user_id");
+	public int showUserId(String mailId) throws DbException {
+
+		try (Connection con = TestConnection.connect();) {
+			int userid = 0;
+			String sql1 = "select user_id from user_account where mail_id = ?";
+			try (PreparedStatement pst1 = con.prepareStatement(sql1);) {
+				pst1.setString(1, mailId);
+				try (ResultSet rows = pst1.executeQuery();) {
+					System.out.println(rows);
+					if (rows.next()) {
+						userid = rows.getInt("user_id");
+					}
+					return userid;
 				}
-				return userid;
-			}}}
-			catch (Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				throw new DbException(InfoMessages.ADDINGACCOUNT);
 			}
@@ -63,63 +78,51 @@ public class createAccountIMPL implements createAccountDAO {
 	}
 
 	public boolean checkLogin(int userId, String Password) throws DbException {
+		boolean res = false;
 		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
-			if (stmt.executeUpdate("select user_id from user_account where user_id = " + userId) != 0) {
-				String sql = "select user_password from user_account where user_id = " + userId;
-				try (ResultSet rows = stmt.executeQuery(sql);) {
-					if (rows.next()) {
-						String userPass = rows.getString("user_password");
-						if (userPass.equals(Password)) {
-							return true;
-						} else {
-							return false;
-						}
-					}
-
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-					throw new DbException(InfoMessages.LOGIN);
-				}
-				
+			String sql = "select user_id,user_password from user_account where user_id = " + userId+ " and user_password='" + Password+"'";
+			try (ResultSet rows = stmt.executeQuery(sql);) {
+				if (rows.next()) {
+					res = true;
+				} 
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.LOGIN);
 			}
-			return false;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION);
 		}
-
+		return res;
 	}
 
 	public boolean checkId(int userId, String emailId) throws DbException {
+		boolean res = false;
 		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
-			if (stmt.executeUpdate("select user_id from user_account where user_id =" + userId) == 1) {
-				String sql = "select mail_id from user_account where user_id =" + userId;
-				try (ResultSet row = stmt.executeQuery(sql);) {
-					if (row.next()) {
-						String mail = row.getString("mail_id");
-						if (mail.equals(emailId)) {
-							return true;
-						}
-					}
-
+			String sql = "select user_id,mail_id from user_account where user_id = " + userId + " and mail_id='"
+					+ emailId+"'";
+			try (ResultSet rows = stmt.executeQuery(sql);) {
+				if (rows.next()) {
+					res = true;
+				} else {
+					return false;
 				}
-				catch (Exception e) {
-					e.printStackTrace();
-					throw new DbException(InfoMessages.CHECKDATA);
-				}			
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.LOGIN);
 			}
-			return false;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION);
 		}
-
+		return res;
 	}
 
-	public boolean changePassword(int userId, String a1) throws DbException {
+	public boolean changePassword(int userId, String newPassword) throws DbException {
 		try (Connection con = TestConnection.connect(); Statement stmt = con.createStatement();) {
-			String sql = "update user_account set user_password='" + a1 + "' where user_id =" + userId;
+			String sql = "update user_account set user_password='" + newPassword + "' where user_id =" + userId;
 			stmt.executeUpdate(sql);
 			System.out.println("Password changed succecfully");
 			return true;

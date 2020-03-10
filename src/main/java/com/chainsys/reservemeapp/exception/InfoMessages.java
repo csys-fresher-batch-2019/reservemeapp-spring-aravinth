@@ -4,9 +4,10 @@ public class InfoMessages {
 	private InfoMessages() {
 		throw new IllegalStateException("Utility class");
 	}
+
 	public static final String CONNECTION = "Unable to establish connection 'SERVER ERROR'";
 	public static final String UPDATTION = "Unable to Update the Train Lists";
-	public static final String INSERTION = "Unable to Insert the Train Lists";
+	public static final String INSERTION = "Unable to Insert the Lists";
 	public static final String SOURCE = "Unable to Show Source Station";
 	public static final String DESTINATION = "Unable to Show Destination Station";
 	public static final String ADDINGACCOUNT = "Unable to add Account";
@@ -21,9 +22,5 @@ public class InfoMessages {
 	public static final String FINDTRAIN = "Unable to Find Train lists";
 	public static final String UPDATESEATS = "Unable to Update the Train Seats";
 	public static final String SHOWSEATS = "Unable to Show Train Seats";
-
-
-
-
 
 }

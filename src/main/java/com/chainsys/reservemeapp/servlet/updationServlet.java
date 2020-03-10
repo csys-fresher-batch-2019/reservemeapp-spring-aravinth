@@ -13,16 +13,19 @@ import com.chainsys.reservemeapp.dao.paymentDAO;
 import com.chainsys.reservemeapp.dao.impl.paymentDAOImpl;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.service.PaymentService;
+
 @WebServlet("/updationServlet")
 public class updationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//paymentDAO dao =  new paymentDAOImpl();
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// paymentDAO dao = new paymentDAOImpl();
 		PaymentService dao = new PaymentService();
-		PrintWriter out=response.getWriter();
+		PrintWriter out = response.getWriter();
 		String Booking = request.getParameter("BookingId");
 		int bookingId = Integer.parseInt(Booking);
-		//out.println("bookingId");
+		// out.println("bookingId");
 		System.out.println(bookingId);
 		String paymentMode = "cash";
 		try {
@@ -32,7 +35,7 @@ public class updationServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		response.sendRedirect("index.jsp");
-		
+
 	}
 
 }

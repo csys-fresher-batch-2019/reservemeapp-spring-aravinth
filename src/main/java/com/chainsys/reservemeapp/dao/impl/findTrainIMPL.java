@@ -13,10 +13,10 @@ import com.chainsys.reservemeapp.util.TestConnection;
 
 public class findTrainIMPL implements findTrainDAO {
 
-	public ArrayList<findTrain> SearchTrain(String sourceStation, String destinationStation, String journeyDate) throws DbException {
+	public ArrayList<findTrain> SearchTrain(String sourceStation, String destinationStation, String journeyDate)
+			throws DbException {
 		ArrayList<findTrain> trains = new ArrayList<>();
 		try (Connection con = TestConnection.connect();) {
-		
 
 			String sql = "select train_name,tl.train_num,ticket_price,travelling_time,no_of_seats_available from train_lists tl, seat_availabilities sa where source_station =? and destination_station= ? and  journey_date=?"
 					+ "  and  sa.train_num  = tl.train_num and no_of_seats_available > 0";
@@ -41,15 +41,14 @@ public class findTrainIMPL implements findTrainDAO {
 					}
 				}
 
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DbException(InfoMessages.FINDTRAIN);
 			}
-			 catch (Exception e) {
-					e.printStackTrace();
-					throw new DbException(InfoMessages.FINDTRAIN);
-					}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION);
-			}
+		}
 
 		return trains;
 	}
