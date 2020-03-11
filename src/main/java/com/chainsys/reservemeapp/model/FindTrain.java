@@ -15,19 +15,19 @@ public class FindTrain {
 		this.seats = seats;
 	}
 
-	public int getTrain_num() {
+	public int getTrainNum() {
 		return trainNum;
 	}
 
-	public void setTrain_num(int train_num) {
+	public void setTrainNum(int train_num) {
 		this.trainNum = train_num;
 	}
 
-	public String getTrain_name() {
+	public String getTrainName() {
 		return trainName;
 	}
 
-	public void setTrain_name(String train_name) {
+	public void setTrainName(String train_name) {
 		this.trainName = train_name;
 	}
 
@@ -39,11 +39,11 @@ public class FindTrain {
 		this.price = price;
 	}
 
-	public String getTravelling_time() {
+	public String getTravellingTime() {
 		return travellingTime;
 	}
 
-	public void setTravelling_time(String travelling_time) {
+	public void setTravellingTime(String travelling_time) {
 		this.travellingTime = travelling_time;
 	}
 

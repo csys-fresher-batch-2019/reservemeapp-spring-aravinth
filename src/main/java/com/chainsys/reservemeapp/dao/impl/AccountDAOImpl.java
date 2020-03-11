@@ -6,16 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.chainsys.reservemeapp.dao.CreateAccountDAO;
+import com.chainsys.reservemeapp.dao.AccountDAO;
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.exception.InfoMessages;
-import com.chainsys.reservemeapp.model.CreateAccount;
-import com.chainsys.reservemeapp.util.TestConnection;
+import com.chainsys.reservemeapp.model.Account;
+import com.chainsys.reservemeapp.util.ConnectionUtil;
+import com.chainsys.reservemeapp.util.InfoMessages;
 
-public class CreateAccountImpl implements CreateAccountDAO {
-	public int addUser(CreateAccount l) throws DbException {
+public class AccountDAOImpl implements AccountDAO {
+	public int addUser(Account l) throws DbException {
 		int userId = 0;
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "insert into user_account(user_name,user_id,user_password,gender,dob,contact_number,mail_id) values(?,user_id.nextval,?,?,?,?,?)";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
 				pst.setString(1, l.getUserName());
@@ -38,13 +38,12 @@ public class CreateAccountImpl implements CreateAccountDAO {
 
 	private int showUserId(String mailId) throws DbException {
 
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			int userid = 0;
 			String sql1 = "select user_id from user_account where mail_id = ?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql1);) {
 				pst1.setString(1, mailId);
 				try (ResultSet rows = pst1.executeQuery();) {
-					System.out.println(rows);
 					if (rows.next()) {
 						userid = rows.getInt("user_id");
 					}
@@ -58,7 +57,7 @@ public class CreateAccountImpl implements CreateAccountDAO {
 	}
 
 	public boolean checkEmail(String mail) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "select mail_id from user_account where mail_id =?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
 				if (pst1.executeUpdate() == 0) {
@@ -76,7 +75,7 @@ public class CreateAccountImpl implements CreateAccountDAO {
 
 	public boolean checkLogin(int userId, String Password) throws DbException {
 		boolean res = false;
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "select user_id,user_password from user_account where user_id = ?and user_password=?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
 				pst1.setInt(1, userId);
@@ -96,7 +95,7 @@ public class CreateAccountImpl implements CreateAccountDAO {
 
 	public boolean checkId(int userId, String emailId) throws DbException {
 		boolean res = false;
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "select user_id,mail_id from user_account where user_id = ? and mail_id=?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
 				pst1.setInt(1, userId);
@@ -117,13 +116,17 @@ public class CreateAccountImpl implements CreateAccountDAO {
 	}
 
 	public boolean changePassword(int userId, String newPassword) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "update user_account set user_password=? where user_id =?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
 				pst1.setString(1, newPassword);
 				pst1.setInt(2, userId);
-				pst1.executeUpdate();
-				return true;
+				int rows = pst1.executeUpdate();
+				if (rows > 0) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,7 +136,7 @@ public class CreateAccountImpl implements CreateAccountDAO {
 	}
 
 	public boolean checkPassword(int userId, String oldPassword) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "select user_id,user_password from user_account where user_id =?and user_password=?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
 				pst1.setInt(1, userId);
@@ -141,7 +144,6 @@ public class CreateAccountImpl implements CreateAccountDAO {
 				if (pst1.executeUpdate() == 1) {
 					return true;
 				} else {
-					System.out.println("Invalid User id or password");
 					return false;
 				}
 			}

@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.dao.CreateAccountDAO;
-import com.chainsys.reservemeapp.dao.impl.CreateAccountImpl;
-import com.chainsys.reservemeapp.service.CreateAccountService;
+import com.chainsys.reservemeapp.dao.AccountDAO;
+import com.chainsys.reservemeapp.dao.impl.AccountDAOImpl;
+import com.chainsys.reservemeapp.service.AccountService;
 
 @WebServlet("/forgetPasswordServle")
 public class ForgetPasswordServlet extends HttpServlet {
@@ -20,7 +20,7 @@ public class ForgetPasswordServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// createAccountDAO dao =new createAccountIMPL();
-		CreateAccountService dao = new CreateAccountService();
+		AccountService dao = new AccountService();
 		String userid = request.getParameter("userid");
 		int userId = Integer.parseInt(userid);
 		String mailId = request.getParameter("mailid");

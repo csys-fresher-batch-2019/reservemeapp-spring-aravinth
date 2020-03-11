@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import com.chainsys.reservemeapp.dao.PassengerInfoDAO;
 import com.chainsys.reservemeapp.dao.PaymentDAO;
-import com.chainsys.reservemeapp.dao.impl.PassengerInfoImpl;
-import com.chainsys.reservemeapp.dao.impl.PaymentImpl;
+import com.chainsys.reservemeapp.dao.impl.PassengerInfoDAOImpl;
+import com.chainsys.reservemeapp.dao.impl.PaymentDAOImpl;
 import com.chainsys.reservemeapp.model.PassengerInfo;
 import com.chainsys.reservemeapp.service.PassengerInfoService;
 
@@ -27,7 +27,7 @@ public class PassengerServlet extends HttpServlet {
 		// passengerInfoDAO dao = new passengerInfoIMPL();
 		PassengerInfoService dao = new PassengerInfoService();
 		PassengerInfo p1 = new PassengerInfo();
-		PaymentDAO dao1 = new PaymentImpl();
+		PaymentDAO dao1 = new PaymentDAOImpl();
 		PrintWriter out = response.getWriter();
 		String TrainNum1 = request.getParameter("trainnum");
 		p1.setTrainNum(Integer.parseInt(TrainNum1));

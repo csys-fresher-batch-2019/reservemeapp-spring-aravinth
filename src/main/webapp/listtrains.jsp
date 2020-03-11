@@ -2,9 +2,9 @@
 
 <%@page import="com.chainsys.reservemeapp.model.FindTrain"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.chainsys.reservemeapp.dao.impl.FindTrainImpl"%>
+<%@page import="com.chainsys.reservemeapp.dao.impl.FindTrainDAOImpl"%>
 <%@page import="com.chainsys.reservemeapp.dao.FindTrainDAO"%>
-<%@page import="com.chainsys.reservemeapp.dao.AdminListOfTrainsDAO"%>
+<%@page import="com.chainsys.reservemeapp.dao.TrainsDAO"%>
 
 <!DOCTYPE html>
 <html>
@@ -46,11 +46,11 @@ if(list.size()>0){
 %>
 
 <tr><td><%=i++ %></td>
-<td><%= f.getTrain_name() %></td>
-<td><%=f.getTrain_num()%></td>
-<td><%= f.getPrice()%></td>
-<td><%= f.getTravelling_time()%></td>
-<td><a href="AvailableSeatsServlet?trainNum=<%=f.getTrain_num()%>">view Seats</a></tr></center>
+<td><%=f.getTrainName()%></td>
+<td><%=f.getTrainNum()%></td>
+<td><%=f.getPrice()%></td>
+<td><%=f.getTravellingTime()%></td>
+<td><a href="AvailableSeatsServlet?trainNum=<%=f.getTrainNum()%>">view Seats</a></tr></center>
 <% 
 }}else{
 %>

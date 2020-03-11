@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.chainsys.reservemeapp.dao.PaymentDAO;
-import com.chainsys.reservemeapp.dao.impl.PaymentImpl;
+import com.chainsys.reservemeapp.dao.impl.PaymentDAOImpl;
 import com.chainsys.reservemeapp.service.PaymentService;
 
 @WebServlet("/paymentServlet")

@@ -1,6 +1,6 @@
 package com.chainsys.reservemeapp.model;
 
-public class AdminListOfTrains {
+public class Trains {
 	@Override
 	public String toString() {
 		return "AdminListOfTrains [trainnum=" + trainNum + ", trainname=" + trainName + ", Sourcestation="
@@ -18,35 +18,35 @@ public class AdminListOfTrains {
 	private int totalNumOfSeats;
 	private int availableSeats;
 
-	public int getTrainnum() {
+	public int getTrainNum() {
 		return trainNum;
 	}
 
-	public void setTrainnum(int trainnum) {
+	public void setTrainNum(int trainnum) {
 		this.trainNum = trainnum;
 	}
 
-	public String getTrainname() {
+	public String getTrainName() {
 		return trainName;
 	}
 
-	public void setTrainname(String trainname) {
+	public void setTrainName(String trainname) {
 		this.trainName = trainname;
 	}
 
-	public String getSourcestation() {
+	public String getSourceStation() {
 		return sourceStation;
 	}
 
-	public void setSourcestation(String sourcestation) {
+	public void setSourceStation(String sourcestation) {
 		sourceStation = sourcestation;
 	}
 
-	public String getDestinationstation() {
+	public String getDestinationStation() {
 		return destinationStation;
 	}
 
-	public void setDestinationstation(String destinationstation) {
+	public void setDestinationStation(String destinationstation) {
 		destinationStation = destinationstation;
 	}
 

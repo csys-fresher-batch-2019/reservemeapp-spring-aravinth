@@ -1,10 +1,10 @@
 package com.chainsys.reservemeapp.dao;
 
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.model.CreateAccount;
+import com.chainsys.reservemeapp.model.Account;
 
-public interface CreateAccountDAO {
-	public int addUser(CreateAccount l) throws DbException;
+public interface AccountDAO {
+	public int addUser(Account l) throws DbException;
 
 	public boolean checkEmail(String mail) throws DbException;
 

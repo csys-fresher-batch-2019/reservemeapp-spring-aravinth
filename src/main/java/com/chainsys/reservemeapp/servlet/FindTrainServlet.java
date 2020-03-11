@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.dao.AdminListOfTrainsDAO;
-import com.chainsys.reservemeapp.dao.impl.AdminListOfTrainsImpl;
-import com.chainsys.reservemeapp.service.AdminListOfTrainsService;
+import com.chainsys.reservemeapp.dao.TrainsDAO;
+import com.chainsys.reservemeapp.dao.impl.TrainsDAOImpl;
+import com.chainsys.reservemeapp.service.TrainsService;
 
 @WebServlet("/FindTrainServlet")
 public class FindTrainServlet extends HttpServlet {
@@ -21,7 +21,7 @@ public class FindTrainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// AdminListOfTrainsDAO dao = new AdminListOfTrainsImpl();
-		AdminListOfTrainsService dao = new AdminListOfTrainsService();
+		TrainsService dao = new TrainsService();
 		try {
 			List<String> sourceStationList = dao.getSourceStation();
 			List<String> destinationStation = dao.getDestinationStation();

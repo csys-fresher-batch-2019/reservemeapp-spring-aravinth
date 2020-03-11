@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.dao.CreateAccountDAO;
-import com.chainsys.reservemeapp.dao.impl.CreateAccountImpl;
-import com.chainsys.reservemeapp.model.CreateAccount;
-import com.chainsys.reservemeapp.service.CreateAccountService;
+import com.chainsys.reservemeapp.dao.AccountDAO;
+import com.chainsys.reservemeapp.dao.impl.AccountDAOImpl;
+import com.chainsys.reservemeapp.model.Account;
+import com.chainsys.reservemeapp.service.AccountService;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -23,8 +23,8 @@ public class RegisterServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		// createAccountDAO dao = new createAccountIMPL();
 		// Calling Method Using Service Layer
-		CreateAccountService dao = new CreateAccountService();
-		CreateAccount l = new CreateAccount();
+		AccountService dao = new AccountService();
+		Account l = new Account();
 		l.setUserName(request.getParameter("username"));
 		l.setUserPassword(request.getParameter("userpassword"));
 		l.setGender(request.getParameter("gender"));

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chainsys.reservemeapp.dao.FindTrainDAO;
-import com.chainsys.reservemeapp.dao.impl.FindTrainImpl;
+import com.chainsys.reservemeapp.dao.impl.FindTrainDAOImpl;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.model.FindTrain;
 
@@ -21,7 +21,7 @@ public class TrainController {
 	@GetMapping("/trains")
 	public ArrayList<FindTrain> list(@RequestParam("source") String source,
 			@RequestParam("destination") String destination, @RequestParam("journeyDate") String journeyDate) {
-		FindTrainDAO dao = new FindTrainImpl();
+		FindTrainDAO dao = new FindTrainDAOImpl();
 		ArrayList<FindTrain> list = null;
 		try {
 			list = dao.searchTrains(source, destination, journeyDate);

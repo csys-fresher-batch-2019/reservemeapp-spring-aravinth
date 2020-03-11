@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.chainsys.reservemeapp.dao.PaymentDAO;
-import com.chainsys.reservemeapp.dao.impl.PaymentImpl;
+import com.chainsys.reservemeapp.dao.impl.PaymentDAOImpl;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.service.PaymentService;
 
@@ -28,7 +28,7 @@ public class UpdationServlet extends HttpServlet {
 		String paymentMode = "cash";
 		try {
 			dao.cashPay(bookingId, paymentMode);
-		} catch (DbException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		response.sendRedirect("index.jsp");

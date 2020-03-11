@@ -4,7 +4,7 @@ public class Payment {
 	private int trainNum;
 	private int userId;
 	private int bookingId;
-	private int totTicketPrice;
+	private int totalTicketPrice;
 	private String payStatus;
 	private int transactionId;
 
@@ -32,12 +32,12 @@ public class Payment {
 		this.bookingId = bookingId;
 	}
 
-	public int getTotTicketPrice() {
-		return totTicketPrice;
+	public int getTotalTicketPrice() {
+		return totalTicketPrice;
 	}
 
 	public void setTotTicketPrice(int totTicketPrice) {
-		this.totTicketPrice = totTicketPrice;
+		this.totalTicketPrice = totTicketPrice;
 	}
 
 	public String getPayStatus() {

@@ -13,11 +13,11 @@ public class SeatStatus {
 		this.trainNum = trainNum;
 	}
 
-	public int getTotNumOfSeats() {
+	public int getTotalNumOfSeats() {
 		return totNumOfSeats;
 	}
 
-	public void setTotNumOfSeats(int totNumOfSeats) {
+	public void setTotalNumOfSeats(int totNumOfSeats) {
 		this.totNumOfSeats = totNumOfSeats;
 	}
 

@@ -1,4 +1,4 @@
-package com.chainsys.reservemeapp.exception;
+package com.chainsys.reservemeapp.util;
 
 public class InfoMessages {
 	private InfoMessages() {
@@ -23,11 +23,11 @@ public class InfoMessages {
 	public static final String FINDTRAIN = "Unable to Find Train lists";
 	public static final String UPDATESEATS = "Unable to Update the Train Seats";
 	public static final String SHOWSEATS = "Unable to Show Train Seats";
-    public static final String DELETE_SEATS = "Unable to delete Train Seats";
-    public static final String DELETE_TRAINS = "Unable to delete Train Lists";
-    public static final String EMAIL_CHECK = "Unable to Check Email";
-    public static final String PASSWORD_CHANGE = "Unable to Change Password";
-    public static final String CHECK_PASSWORD = "Unable to Verify the Old Password";
-    public static final String BOOKING_ID = "Unable to Show Booking Id";
-    public static final String TICKET_PRICE = "Unable to take Total Ticket Price";
+	public static final String DELETE_SEATS = "Unable to delete Train Seats";
+	public static final String DELETE_TRAINS = "Unable to delete Train Lists";
+	public static final String EMAIL_CHECK = "Unable to Check Email";
+	public static final String PASSWORD_CHANGE = "Unable to Change Password";
+	public static final String CHECK_PASSWORD = "Unable to Verify the Old Password";
+	public static final String BOOKING_ID = "Unable to Show Booking Id";
+	public static final String TICKET_PRICE = "Unable to take Total Ticket Price";
 }

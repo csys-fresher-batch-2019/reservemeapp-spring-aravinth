@@ -7,14 +7,14 @@ import java.sql.SQLException;
 
 import com.chainsys.reservemeapp.dao.PaymentDAO;
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.exception.InfoMessages;
-import com.chainsys.reservemeapp.util.TestConnection;
+import com.chainsys.reservemeapp.util.ConnectionUtil;
+import com.chainsys.reservemeapp.util.InfoMessages;
 
-public class PaymentImpl implements PaymentDAO {
+public class PaymentDAOImpl implements PaymentDAO {
 
 	@Override
 	public boolean paymentSuccess(int bookingId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "update payment_status set pay_status ='paid',payment_mode='creditcard' where booking_id = ?  ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
 				pst.setInt(1, bookingId);
@@ -30,7 +30,7 @@ public class PaymentImpl implements PaymentDAO {
 	}
 
 	private boolean updateBookStatus(int bookingId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql2 = "update passenger_details set book_status = 'booked' where booking_id =?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql2);) {
 				pst1.setInt(1, bookingId);
@@ -44,7 +44,7 @@ public class PaymentImpl implements PaymentDAO {
 	}
 
 	private boolean updateSeatStatus(int bookingId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql3 = "update seat_availabilities set no_of_seats_available = ( tot_no_of_seats- (select sum( no_of_tickets) from passenger_details where train_num = (select train_num from passenger_details where booking_id = ?)))where train_num=(select train_num from passenger_details where booking_id = ?) ";
 			try (PreparedStatement pst3 = con.prepareStatement(sql3);) {
 				pst3.setInt(1, bookingId);
@@ -60,7 +60,7 @@ public class PaymentImpl implements PaymentDAO {
 
 	@Override
 	public boolean paymentFailure(int bookingId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql3 = "update payment_status  set pay_status = 'failure' where booking_id =?";
 			try (PreparedStatement pst = con.prepareStatement(sql3);) {
 				pst.setInt(1, bookingId);
@@ -76,7 +76,7 @@ public class PaymentImpl implements PaymentDAO {
 	}
 
 	private void paymentFailureUpdate(int bookingId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql4 = "update passenger_details set booking_status = 'cancelled' where booking_id = ?";
 			try (PreparedStatement pst = con.prepareStatement(sql4);) {
 				pst.setInt(1, bookingId);
@@ -90,7 +90,7 @@ public class PaymentImpl implements PaymentDAO {
 
 	@Override
 	public int totTicketPrice(int bookingId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql1 = "select tot_ticket_price from payment_status where booking_id =?";
 			try (PreparedStatement pst = con.prepareStatement(sql1);) {
 				pst.setInt(1, bookingId);
@@ -116,7 +116,7 @@ public class PaymentImpl implements PaymentDAO {
 
 		System.out.println("Payment Mode:" + paymentMode);
 		String paymentStatus = "pending";
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "update payment_status set pay_status =?, payment_mode=? where booking_id = ?  ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
 				pst.setString(1, paymentStatus);

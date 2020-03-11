@@ -16,7 +16,7 @@ public class PassengerInfo {
 
 	private int bookingId;
 	private int userId;
-	public String bookStatus;
+	private String bookStatus;
 
 	public int getTrainNum() {
 		return trainNum;

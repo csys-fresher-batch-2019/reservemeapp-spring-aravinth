@@ -8,16 +8,16 @@ import java.util.ArrayList;
 
 import com.chainsys.reservemeapp.dao.FindTrainDAO;
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.exception.InfoMessages;
 import com.chainsys.reservemeapp.model.FindTrain;
-import com.chainsys.reservemeapp.util.TestConnection;
+import com.chainsys.reservemeapp.util.ConnectionUtil;
+import com.chainsys.reservemeapp.util.InfoMessages;
 
-public class FindTrainImpl implements FindTrainDAO {
+public class FindTrainDAOImpl implements FindTrainDAO {
 
 	public ArrayList<FindTrain> searchTrains(String sourceStation, String destinationStation, String journeyDate)
 			throws DbException {
 		ArrayList<FindTrain> trains = new ArrayList<>();
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 
 			String sql = "select train_name,tl.train_num,ticket_price,travelling_time,no_of_seats_available from train_lists tl, seat_availabilities sa where source_station =? and destination_station= ? and  journey_date=?"
 					+ "  and  sa.train_num  = tl.train_num and no_of_seats_available > 0";
@@ -31,10 +31,10 @@ public class FindTrainImpl implements FindTrainDAO {
 
 						FindTrain f = new FindTrain();
 
-						f.setTrain_name(rows.getString("train_name"));
-						f.setTrain_num(rows.getInt("train_num"));
+						f.setTrainName(rows.getString("train_name"));
+						f.setTrainNum(rows.getInt("train_num"));
 						f.setPrice(rows.getInt("ticket_price"));
-						f.setTravelling_time(rows.getString("travelling_time"));
+						f.setTravellingTime(rows.getString("travelling_time"));
 
 						f.setSeats(rows.getInt("no_of_seats_available"));
 						trains.add(f);

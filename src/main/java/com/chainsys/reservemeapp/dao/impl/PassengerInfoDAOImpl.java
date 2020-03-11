@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import com.chainsys.reservemeapp.dao.PassengerInfoDAO;
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.exception.InfoMessages;
 import com.chainsys.reservemeapp.model.PassengerInfo;
-import com.chainsys.reservemeapp.util.TestConnection;
+import com.chainsys.reservemeapp.util.ConnectionUtil;
+import com.chainsys.reservemeapp.util.InfoMessages;
 
-public class PassengerInfoImpl implements PassengerInfoDAO {
+public class PassengerInfoDAOImpl implements PassengerInfoDAO {
 	public int addPassenger(PassengerInfo p1) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "insert into passenger_details(train_num,user_id,booking_id,passenger_name,phone_number,no_of_tickets)values(?,?,booking_id.nextval,?,?,?)";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
 				pst.setInt(1, p1.getTrainNum());
@@ -23,7 +23,6 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 				pst.setLong(4, p1.getPhoneNumber());
 				pst.setInt(5, p1.getNoOfTickets());
 				pst.executeUpdate();
-				System.out.println("Succesfully Passenger details added...");
 				int trainNum = p1.getTrainNum();
 				int totTickets = p1.getNoOfTickets();
 				int userId = p1.getUserId();
@@ -40,7 +39,7 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 	}
 
 	private void updatePaymentSts(int trainNum, int totTicketPrice, int bookingId, int userId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql22 = "insert into payment_status(train_num,user_id,booking_id,tot_ticket_price)values(?,?,?,?)";
 			try (PreparedStatement pst = con.prepareStatement(sql22);) {
 				pst.setInt(1, trainNum);
@@ -59,14 +58,13 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 
 	private int showBookingId(int userId) throws DbException {
 		int bookingId = 0;
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql1 = "select max(booking_id) as id from passenger_details where user_id =?";
 			try (PreparedStatement pst = con.prepareStatement(sql1);) {
 				pst.setInt(1, userId);
 				try (ResultSet rows = pst.executeQuery();) {
 					rows.next();
 					bookingId = rows.getInt("id");
-					con.close();
 				}
 			}
 		} catch (SQLException e) {
@@ -78,7 +76,7 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 
 	private int showTicketPrice(int trainNum, int totTickets) throws DbException {
 		int totTicketPrice = 0;
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql3 = "select ticket_price from train_lists where train_num =?";
 			try (PreparedStatement pst2 = con.prepareStatement(sql3);) {
 				pst2.setInt(1, trainNum);
@@ -99,7 +97,7 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 
 	@Override
 	public ArrayList<PassengerInfo> bookingDetails(int bookingId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String sql6 = "select * from passenger_details where booking_id =?";
 			try (PreparedStatement pst3 = con.prepareStatement(sql6);) {
 				pst3.setInt(1, bookingId);
@@ -124,29 +122,9 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 		}
 	}
 
-	@Override
-	public int totalPrice(int bookingId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
-			String sql = "select tot_ticket_price from payment_status where booking_id = ?";
-			try (PreparedStatement pst = con.prepareStatement(sql);) {
-				pst.setInt(1, bookingId);
-				try (ResultSet row = pst.executeQuery();) {
-					int price = 0;
-					if (row.next()) {
-						price = row.getInt("tot_ticket_price");
-					}
-					return price;
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DbException(InfoMessages.PRICE, e);
-		}
-	}
-
 	public boolean validateBookingId(int bookingId) throws DbException {
 
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String bId = "select booking_id from passenger_details where booking_id=?";
 			try (PreparedStatement smt = con.prepareStatement(bId);) {
 				smt.setInt(1, bookingId);
@@ -172,7 +150,7 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 	}
 
 	public boolean validateTrainNum(int trainNum) throws DbException {
-		try (Connection con = TestConnection.connect();) {
+		try (Connection con = ConnectionUtil.connect();) {
 			String train = "select train_num from train_lists where train_num = ?";
 			try (PreparedStatement smt9 = con.prepareStatement(train);) {
 				smt9.setInt(1, trainNum);
@@ -180,9 +158,6 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 					int trainNum1 = 0;
 					if (row9.next()) {
 						trainNum1 = row9.getInt("train_num");
-					}
-					if (trainNum == trainNum1) {
-
 						return true;
 					} else {
 
@@ -201,8 +176,8 @@ public class PassengerInfoImpl implements PassengerInfoDAO {
 
 	@Override
 	public ArrayList<PassengerInfo> ticketDetails(int userId) throws DbException {
-		try (Connection con = TestConnection.connect();) {
-			String sql6 = "select * from passenger_details where user_id =?";
+		try (Connection con = ConnectionUtil.connect();) {
+			String sql6 = "select booking_id,train_num,passenger_name,phone_number,no_of_tickets,book_status from passenger_details where user_id =?";
 			try (PreparedStatement pst3 = con.prepareStatement(sql6);) {
 				pst3.setInt(1, userId);
 				try (ResultSet rows = pst3.executeQuery();) {

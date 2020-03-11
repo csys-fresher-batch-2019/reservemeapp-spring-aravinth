@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.dao.CreateAccountDAO;
-import com.chainsys.reservemeapp.dao.impl.CreateAccountImpl;
+import com.chainsys.reservemeapp.dao.AccountDAO;
+import com.chainsys.reservemeapp.dao.impl.AccountDAOImpl;
 
 @WebServlet("/resetPasswordServlet")
 public class ResetPasswordServlet extends HttpServlet {
@@ -18,7 +18,7 @@ public class ResetPasswordServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		CreateAccountDAO dao = new CreateAccountImpl();
+		AccountDAO dao = new AccountDAOImpl();
 		String userid = request.getParameter("userid");
 		int userId = Integer.parseInt(userid);
 		String password = request.getParameter("password");
