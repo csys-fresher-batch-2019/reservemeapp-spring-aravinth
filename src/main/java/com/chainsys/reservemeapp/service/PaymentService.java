@@ -2,13 +2,13 @@ package com.chainsys.reservemeapp.service;
 
 import org.springframework.stereotype.Service;
 
-import com.chainsys.reservemeapp.dao.paymentDAO;
-import com.chainsys.reservemeapp.dao.impl.paymentDAOImpl;
+import com.chainsys.reservemeapp.dao.PaymentDAO;
+import com.chainsys.reservemeapp.dao.impl.PaymentImpl;
 import com.chainsys.reservemeapp.exception.DbException;
 
 @Service
 public class PaymentService {
-	paymentDAO obj = new paymentDAOImpl();
+	PaymentDAO obj = new PaymentImpl();
 
 	public boolean paymentSuccess(int bookingId) throws DbException {
 		return obj.paymentSuccess(bookingId);
@@ -19,7 +19,7 @@ public class PaymentService {
 	}
 
 	public int totTicPrice(int bookingId) throws DbException {
-		return obj.totTicPrice(bookingId);
+		return obj.totTicketPrice(bookingId);
 	}
 
 	public boolean cashPay(int bookingId, String paymentMode) throws DbException {

@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import com.chainsys.reservemeapp.dao.passengerInfoDAO;
-import com.chainsys.reservemeapp.dao.impl.passengerInfoIMPL;
+import com.chainsys.reservemeapp.dao.PassengerInfoDAO;
+import com.chainsys.reservemeapp.dao.impl.PassengerInfoImpl;
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.model.passengerInfo;
+import com.chainsys.reservemeapp.model.PassengerInfo;
 
 @Service
 public class PassengerInfoService {
-	passengerInfoDAO obj = new passengerInfoIMPL();
+	PassengerInfoDAO obj = new PassengerInfoImpl();
 
-	public int addPassenger(passengerInfo p1) throws DbException {
+	public int addPassenger(PassengerInfo p1) throws DbException {
 		return obj.addPassenger(p1);
 	}
 
-	public ArrayList<passengerInfo> BookingDetails(int bookingId) throws DbException {
-		return obj.BookingDetails(bookingId);
+	public ArrayList<PassengerInfo> BookingDetails(int bookingId) throws DbException {
+		return obj.bookingDetails(bookingId);
 	}
 
 	public int totalPrice(int bookingId) throws DbException {
@@ -33,7 +33,7 @@ public class PassengerInfoService {
 		return obj.validateTrainNum(trainNum);
 	}
 
-	public ArrayList<passengerInfo> ticketDetails(int userId) throws DbException {
+	public ArrayList<PassengerInfo> ticketDetails(int userId) throws DbException {
 		return obj.ticketDetails(userId);
 	}
 

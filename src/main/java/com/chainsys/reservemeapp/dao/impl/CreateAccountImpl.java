@@ -6,14 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.chainsys.reservemeapp.dao.createAccountDAO;
+import com.chainsys.reservemeapp.dao.CreateAccountDAO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.InfoMessages;
-import com.chainsys.reservemeapp.model.createAccount;
+import com.chainsys.reservemeapp.model.CreateAccount;
 import com.chainsys.reservemeapp.util.TestConnection;
 
-public class createAccountIMPL implements createAccountDAO {
-	public int AddUser(createAccount l) throws DbException {
+public class CreateAccountImpl implements CreateAccountDAO {
+	public int addUser(CreateAccount l) throws DbException {
 		int userId = 0;
 		try (Connection con = TestConnection.connect();) {
 			String sql = "insert into user_account(user_name,user_id,user_password,gender,dob,contact_number,mail_id) values(?,user_id.nextval,?,?,?,?,?)";
@@ -28,7 +28,6 @@ public class createAccountIMPL implements createAccountDAO {
 				pst.executeUpdate();
 				String mailId = l.getMailId();
 				userId = showUserId(mailId);
-				System.out.println("Succesfully Account created");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -124,7 +123,6 @@ public class createAccountIMPL implements createAccountDAO {
 				pst1.setString(1, newPassword);
 				pst1.setInt(2, userId);
 				pst1.executeUpdate();
-				System.out.println("Password changed succecfully");
 				return true;
 			}
 		} catch (SQLException e) {

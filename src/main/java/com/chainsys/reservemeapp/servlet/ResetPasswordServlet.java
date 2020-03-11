@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.dao.createAccountDAO;
-import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
+import com.chainsys.reservemeapp.dao.CreateAccountDAO;
+import com.chainsys.reservemeapp.dao.impl.CreateAccountImpl;
 
 @WebServlet("/resetPasswordServlet")
-public class resetPasswordServlet extends HttpServlet {
+public class ResetPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		createAccountDAO dao = new createAccountIMPL();
+		CreateAccountDAO dao = new CreateAccountImpl();
 		String userid = request.getParameter("userid");
 		int userId = Integer.parseInt(userid);
 		String password = request.getParameter("password");

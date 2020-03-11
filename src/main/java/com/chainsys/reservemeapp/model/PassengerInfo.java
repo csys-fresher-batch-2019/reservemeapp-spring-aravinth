@@ -1,6 +1,6 @@
 package com.chainsys.reservemeapp.model;
 
-public class passengerInfo {
+public class PassengerInfo {
 	private int trainNum;
 	private String passengerName;
 	private Long phoneNumber;

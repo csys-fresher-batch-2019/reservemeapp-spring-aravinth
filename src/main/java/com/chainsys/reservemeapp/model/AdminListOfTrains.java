@@ -3,51 +3,51 @@ package com.chainsys.reservemeapp.model;
 public class AdminListOfTrains {
 	@Override
 	public String toString() {
-		return "AdminListOfTrains [trainnum=" + trainnum + ", trainname=" + trainname + ", Sourcestation="
-				+ Sourcestation + ", Destinationstation=" + Destinationstation + ", ticketPrice=" + ticketPrice
+		return "AdminListOfTrains [trainnum=" + trainNum + ", trainname=" + trainName + ", Sourcestation="
+				+ sourceStation + ", Destinationstation=" + destinationStation + ", ticketPrice=" + ticketPrice
 				+ ", journeyDate=" + journeyDate + ", travellingTime=" + travellingTime + "]";
 	}
 
-	private int trainnum;
-	private String trainname;
-	private String Sourcestation;
-	private String Destinationstation;
+	private int trainNum;
+	private String trainName;
+	private String sourceStation;
+	private String destinationStation;
 	private int ticketPrice;
 	private String journeyDate;
 	private String travellingTime;
-	private int totNumOfSeats;
+	private int totalNumOfSeats;
 	private int availableSeats;
 
 	public int getTrainnum() {
-		return trainnum;
+		return trainNum;
 	}
 
 	public void setTrainnum(int trainnum) {
-		this.trainnum = trainnum;
+		this.trainNum = trainnum;
 	}
 
 	public String getTrainname() {
-		return trainname;
+		return trainName;
 	}
 
 	public void setTrainname(String trainname) {
-		this.trainname = trainname;
+		this.trainName = trainname;
 	}
 
 	public String getSourcestation() {
-		return Sourcestation;
+		return sourceStation;
 	}
 
 	public void setSourcestation(String sourcestation) {
-		Sourcestation = sourcestation;
+		sourceStation = sourcestation;
 	}
 
 	public String getDestinationstation() {
-		return Destinationstation;
+		return destinationStation;
 	}
 
 	public void setDestinationstation(String destinationstation) {
-		Destinationstation = destinationstation;
+		destinationStation = destinationstation;
 	}
 
 	public int getTicketPrice() {
@@ -75,11 +75,11 @@ public class AdminListOfTrains {
 	}
 
 	public int getTotNumOfSeats() {
-		return totNumOfSeats;
+		return totalNumOfSeats;
 	}
 
 	public void setTotNumOfSeats(int totNumOfSeats) {
-		this.totNumOfSeats = totNumOfSeats;
+		this.totalNumOfSeats = totNumOfSeats;
 	}
 
 	public int getAvailableSeats() {

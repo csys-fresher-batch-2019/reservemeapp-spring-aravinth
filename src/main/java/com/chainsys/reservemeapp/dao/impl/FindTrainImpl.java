@@ -6,17 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.chainsys.reservemeapp.dao.findTrainDAO;
+import com.chainsys.reservemeapp.dao.FindTrainDAO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.InfoMessages;
-import com.chainsys.reservemeapp.model.findTrain;
+import com.chainsys.reservemeapp.model.FindTrain;
 import com.chainsys.reservemeapp.util.TestConnection;
 
-public class findTrainIMPL implements findTrainDAO {
+public class FindTrainImpl implements FindTrainDAO {
 
-	public ArrayList<findTrain> SearchTrain(String sourceStation, String destinationStation, String journeyDate)
+	public ArrayList<FindTrain> searchTrains(String sourceStation, String destinationStation, String journeyDate)
 			throws DbException {
-		ArrayList<findTrain> trains = new ArrayList<>();
+		ArrayList<FindTrain> trains = new ArrayList<>();
 		try (Connection con = TestConnection.connect();) {
 
 			String sql = "select train_name,tl.train_num,ticket_price,travelling_time,no_of_seats_available from train_lists tl, seat_availabilities sa where source_station =? and destination_station= ? and  journey_date=?"
@@ -29,7 +29,7 @@ public class findTrainIMPL implements findTrainDAO {
 				try (ResultSet rows = pst.executeQuery();) {
 					while (rows.next()) {
 
-						findTrain f = new findTrain();
+						FindTrain f = new FindTrain();
 
 						f.setTrain_name(rows.getString("train_name"));
 						f.setTrain_num(rows.getInt("train_num"));

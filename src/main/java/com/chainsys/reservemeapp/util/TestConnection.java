@@ -16,7 +16,7 @@ public class TestConnection {
 			 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system","oracle");
 			System.out.println(connection);
 			return connection;
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException |SQLException e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.CONNECTION, e);
 

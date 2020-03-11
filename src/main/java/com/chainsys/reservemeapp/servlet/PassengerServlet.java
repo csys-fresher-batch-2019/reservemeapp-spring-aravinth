@@ -11,23 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.chainsys.reservemeapp.dao.passengerInfoDAO;
-import com.chainsys.reservemeapp.dao.paymentDAO;
-import com.chainsys.reservemeapp.dao.impl.passengerInfoIMPL;
-import com.chainsys.reservemeapp.dao.impl.paymentDAOImpl;
-import com.chainsys.reservemeapp.model.passengerInfo;
+import com.chainsys.reservemeapp.dao.PassengerInfoDAO;
+import com.chainsys.reservemeapp.dao.PaymentDAO;
+import com.chainsys.reservemeapp.dao.impl.PassengerInfoImpl;
+import com.chainsys.reservemeapp.dao.impl.PaymentImpl;
+import com.chainsys.reservemeapp.model.PassengerInfo;
 import com.chainsys.reservemeapp.service.PassengerInfoService;
 
 @WebServlet("/passengerservlet")
-public class passengerservlet extends HttpServlet {
+public class PassengerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// passengerInfoDAO dao = new passengerInfoIMPL();
 		PassengerInfoService dao = new PassengerInfoService();
-		passengerInfo p1 = new passengerInfo();
-		paymentDAO dao1 = new paymentDAOImpl();
+		PassengerInfo p1 = new PassengerInfo();
+		PaymentDAO dao1 = new PaymentImpl();
 		PrintWriter out = response.getWriter();
 		String TrainNum1 = request.getParameter("trainnum");
 		p1.setTrainNum(Integer.parseInt(TrainNum1));
@@ -41,7 +41,7 @@ public class passengerservlet extends HttpServlet {
 		try {
 			int bookingId = dao.addPassenger(p1);
 			// out.println("BOOKINGID :"+bookingId);
-			int totAmount = dao1.totTicPrice(bookingId);
+			int totAmount = dao1.totTicketPrice(bookingId);
 			HttpSession session = request.getSession();
 			session.setAttribute("LOGGED_IN_BOOKING_ID", bookingId);
 			HttpSession session1 = request.getSession();

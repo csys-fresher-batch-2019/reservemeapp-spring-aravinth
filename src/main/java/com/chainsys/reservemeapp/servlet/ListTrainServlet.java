@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.model.findTrain;
+import com.chainsys.reservemeapp.model.FindTrain;
 import com.chainsys.reservemeapp.service.FindTrainService;
 
 @WebServlet("/ListTrainServlet")
@@ -26,7 +26,7 @@ public class ListTrainServlet extends HttpServlet {
 		// findTrainDAO dao = new findTrainIMPL();
 		FindTrainService dao = new FindTrainService();
 		try {
-			ArrayList<findTrain> list = dao.SearchTrain(source, destination, journeyDate);
+			ArrayList<FindTrain> list = dao.SearchTrain(source, destination, journeyDate);
 			request.setAttribute("trainList", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("listtrains.jsp");
 			dispatcher.forward(request, response);

@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chainsys.reservemeapp.dao.findTrainDAO;
-import com.chainsys.reservemeapp.dao.impl.findTrainIMPL;
+import com.chainsys.reservemeapp.dao.FindTrainDAO;
+import com.chainsys.reservemeapp.dao.impl.FindTrainImpl;
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.model.findTrain;
+import com.chainsys.reservemeapp.model.FindTrain;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -19,12 +19,12 @@ import com.chainsys.reservemeapp.model.findTrain;
 public class TrainController {
 
 	@GetMapping("/trains")
-	public ArrayList<findTrain> list(@RequestParam("source") String source,
+	public ArrayList<FindTrain> list(@RequestParam("source") String source,
 			@RequestParam("destination") String destination, @RequestParam("journeyDate") String journeyDate) {
-		findTrainDAO dao = new findTrainIMPL();
-		ArrayList<findTrain> list = null;
+		FindTrainDAO dao = new FindTrainImpl();
+		ArrayList<FindTrain> list = null;
 		try {
-			list = dao.SearchTrain(source, destination, journeyDate);
+			list = dao.searchTrains(source, destination, journeyDate);
 
 		} catch (DbException e) {
 			// TODO Auto-generated catch block

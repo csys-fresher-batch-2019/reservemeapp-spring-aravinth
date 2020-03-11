@@ -2,17 +2,17 @@ package com.chainsys.reservemeapp.service;
 
 import org.springframework.stereotype.Service;
 
-import com.chainsys.reservemeapp.dao.createAccountDAO;
-import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
+import com.chainsys.reservemeapp.dao.CreateAccountDAO;
+import com.chainsys.reservemeapp.dao.impl.CreateAccountImpl;
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.model.createAccount;
+import com.chainsys.reservemeapp.model.CreateAccount;
 
 @Service
 public class CreateAccountService {
-	createAccountDAO obj = new createAccountIMPL();
+	CreateAccountDAO obj = new CreateAccountImpl();
 
-	public int AddUser(createAccount l) throws DbException {
-		return obj.AddUser(l);
+	public int AddUser(CreateAccount l) throws DbException {
+		return obj.addUser(l);
 	}
 
 	public boolean checkEmail(String mail) throws DbException {

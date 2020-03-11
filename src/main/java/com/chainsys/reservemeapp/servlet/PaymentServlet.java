@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.dao.paymentDAO;
-import com.chainsys.reservemeapp.dao.impl.paymentDAOImpl;
+import com.chainsys.reservemeapp.dao.PaymentDAO;
+import com.chainsys.reservemeapp.dao.impl.PaymentImpl;
 import com.chainsys.reservemeapp.service.PaymentService;
 
 @WebServlet("/paymentServlet")
-public class paymentServlet extends HttpServlet {
+public class PaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

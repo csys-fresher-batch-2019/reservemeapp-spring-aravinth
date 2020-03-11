@@ -33,7 +33,6 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 				int totSeats = l.getTotNumOfSeats();
 				int availableSeats = l.getAvailableSeats();
 				addTrainSeats(trainNum, totSeats, availableSeats);
-				System.out.println("Succesfully Train_lists added");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -49,7 +48,6 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 				pst1.setInt(2, totSeats);
 				pst1.setInt(3, availableSeats);
 				pst1.executeUpdate();
-				System.out.println("Succesfully Train Seats added");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,8 +91,7 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
 				pst.setString(1, travellingTime);
 				pst.setInt(2, trainNum);
-				int rows = pst.executeUpdate();
-				System.out.println("Succesfully Train Lists updated" + rows);
+				pst.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

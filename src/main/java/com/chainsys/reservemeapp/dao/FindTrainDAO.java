@@ -3,8 +3,8 @@ package com.chainsys.reservemeapp.dao;
 import java.util.ArrayList;
 
 import com.chainsys.reservemeapp.exception.DbException;
-import com.chainsys.reservemeapp.model.findTrain;
+import com.chainsys.reservemeapp.model.FindTrain;
 
-public interface findTrainDAO {
-	public ArrayList<findTrain> SearchTrain(String a, String b, String c) throws DbException;
+public interface FindTrainDAO {
+	public ArrayList<FindTrain> searchTrains(String a, String b, String c) throws DbException;
 }

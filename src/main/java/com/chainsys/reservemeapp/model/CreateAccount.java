@@ -1,6 +1,6 @@
 package com.chainsys.reservemeapp.model;
 
-public class createAccount {
+public class CreateAccount {
 
 	private String userName;
 	private int userId;

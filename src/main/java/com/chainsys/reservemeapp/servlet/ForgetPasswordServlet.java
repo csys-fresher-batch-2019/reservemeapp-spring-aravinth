@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.dao.createAccountDAO;
-import com.chainsys.reservemeapp.dao.impl.createAccountIMPL;
+import com.chainsys.reservemeapp.dao.CreateAccountDAO;
+import com.chainsys.reservemeapp.dao.impl.CreateAccountImpl;
 import com.chainsys.reservemeapp.service.CreateAccountService;
 
 @WebServlet("/forgetPasswordServle")
-public class forgetPasswordServle extends HttpServlet {
+public class ForgetPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

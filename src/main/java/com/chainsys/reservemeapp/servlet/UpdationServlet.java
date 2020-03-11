@@ -9,29 +9,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.chainsys.reservemeapp.dao.paymentDAO;
-import com.chainsys.reservemeapp.dao.impl.paymentDAOImpl;
+import com.chainsys.reservemeapp.dao.PaymentDAO;
+import com.chainsys.reservemeapp.dao.impl.PaymentImpl;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.service.PaymentService;
 
 @WebServlet("/updationServlet")
-public class updationServlet extends HttpServlet {
+public class UpdationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// paymentDAO dao = new paymentDAOImpl();
 		PaymentService dao = new PaymentService();
 		PrintWriter out = response.getWriter();
 		String Booking = request.getParameter("BookingId");
 		int bookingId = Integer.parseInt(Booking);
-		// out.println("bookingId");
 		System.out.println(bookingId);
 		String paymentMode = "cash";
 		try {
 			dao.cashPay(bookingId, paymentMode);
 		} catch (DbException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		response.sendRedirect("index.jsp");

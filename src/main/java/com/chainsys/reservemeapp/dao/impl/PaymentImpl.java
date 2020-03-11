@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.chainsys.reservemeapp.dao.paymentDAO;
+import com.chainsys.reservemeapp.dao.PaymentDAO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.InfoMessages;
 import com.chainsys.reservemeapp.util.TestConnection;
 
-public class paymentDAOImpl implements paymentDAO {
+public class PaymentImpl implements PaymentDAO {
 
 	@Override
 	public boolean paymentSuccess(int bookingId) throws DbException {
@@ -89,7 +89,7 @@ public class paymentDAOImpl implements paymentDAO {
 	}
 
 	@Override
-	public int totTicPrice(int bookingId) throws DbException {
+	public int totTicketPrice(int bookingId) throws DbException {
 		try (Connection con = TestConnection.connect();) {
 			String sql1 = "select tot_ticket_price from payment_status where booking_id =?";
 			try (PreparedStatement pst = con.prepareStatement(sql1);) {

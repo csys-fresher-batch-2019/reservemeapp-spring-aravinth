@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@page import="com.chainsys.reservemeapp.model.findTrain"%>
+<%@page import="com.chainsys.reservemeapp.model.FindTrain"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.chainsys.reservemeapp.dao.impl.findTrainIMPL"%>
-<%@page import="com.chainsys.reservemeapp.dao.findTrainDAO"%>
+<%@page import="com.chainsys.reservemeapp.dao.impl.FindTrainImpl"%>
+<%@page import="com.chainsys.reservemeapp.dao.FindTrainDAO"%>
 <%@page import="com.chainsys.reservemeapp.dao.AdminListOfTrainsDAO"%>
 
 <!DOCTYPE html>
@@ -25,15 +25,16 @@
 <br/>
 
 <%
-ArrayList<findTrain> list= (ArrayList <findTrain>)request.getAttribute("trainList");
+	ArrayList<FindTrain> list= (ArrayList <FindTrain>)request.getAttribute("trainList");
 %>
 
 
 
 <%
-int i= 1;
+	int i= 1;
 int n=0;
-if(list.size()>0){%>
+if(list.size()>0){
+%>
 <h1><center> List Trains</center></h1>
 <center>
 <h2>
@@ -41,7 +42,8 @@ if(list.size()>0){%>
 <thead><tr><th>S.no</th> <th> Train Name </th><th>Train Num </th><th>Ticket Price </th><th>Travelling time</th><th>View Availability</th></tr></thead>
 <tbody></h2>
 <%
-for(findTrain f : list){%>
+	for(FindTrain f : list){
+%>
 
 <tr><td><%=i++ %></td>
 <td><%= f.getTrain_name() %></td>

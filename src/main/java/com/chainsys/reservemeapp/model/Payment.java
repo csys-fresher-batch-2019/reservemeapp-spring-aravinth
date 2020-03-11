@@ -1,6 +1,6 @@
 package com.chainsys.reservemeapp.model;
 
-public class payment {
+public class Payment {
 	private int trainNum;
 	private int userId;
 	private int bookingId;
