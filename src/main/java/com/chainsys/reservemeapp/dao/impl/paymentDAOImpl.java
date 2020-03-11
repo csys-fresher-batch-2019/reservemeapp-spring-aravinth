@@ -21,48 +21,39 @@ public class paymentDAOImpl implements paymentDAO {
 				pst.executeUpdate();
 				updateBookStatus(bookingId);
 				updateSeatStatus(bookingId);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.UPDATEPAYMENT);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
 		}
 		return false;
 	}
 
-	public boolean updateBookStatus(int bookingId) throws DbException {
+	private boolean updateBookStatus(int bookingId) throws DbException {
 		try (Connection con = TestConnection.connect();) {
 			String sql2 = "update passenger_details set book_status = 'booked' where booking_id =?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql2);) {
 				pst1.setInt(1, bookingId);
 				pst1.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.UPDATEPAYMENT);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
 		}
 		return false;
 	}
 
-	public boolean updateSeatStatus(int bookingId) throws DbException {
+	private boolean updateSeatStatus(int bookingId) throws DbException {
 		try (Connection con = TestConnection.connect();) {
 			String sql3 = "update seat_availabilities set no_of_seats_available = ( tot_no_of_seats- (select sum( no_of_tickets) from passenger_details where train_num = (select train_num from passenger_details where booking_id = ?)))where train_num=(select train_num from passenger_details where booking_id = ?) ";
 			try (PreparedStatement pst3 = con.prepareStatement(sql3);) {
 				pst3.setInt(1, bookingId);
 				pst3.setInt(2, bookingId);
 				pst3.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.UPDATEPAYMENT);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.UPDATESEATS, e);
 		}
 		return false;
 	}
@@ -76,30 +67,24 @@ public class paymentDAOImpl implements paymentDAO {
 				pst.executeUpdate();
 				paymentFailureUpdate(bookingId);
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.UPDATEPAYMENT);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
 		}
 		return false;
 	}
 
-	public void paymentFailureUpdate(int bookingId) throws DbException {
+	private void paymentFailureUpdate(int bookingId) throws DbException {
 		try (Connection con = TestConnection.connect();) {
 			String sql4 = "update passenger_details set booking_status = 'cancelled' where booking_id = ?";
 			try (PreparedStatement pst = con.prepareStatement(sql4);) {
 				pst.setInt(1, bookingId);
 				pst.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.UPDATEPAYMENT);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
 		}
 	}
 
@@ -117,14 +102,10 @@ public class paymentDAOImpl implements paymentDAO {
 					}
 					return price;
 				}
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-				throw new DbException(InfoMessages.PRICE);
 			}
-
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(InfoMessages.PRICE, e);
 
 		}
 
@@ -144,13 +125,10 @@ public class paymentDAOImpl implements paymentDAO {
 				int rows = pst.executeUpdate();
 				updateBookStatus(bookingId);
 				updateSeatStatus(bookingId);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.UPDATEPAYMENT);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
 		}
 		return false;
 	}

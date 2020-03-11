@@ -3,6 +3,7 @@ package com.chainsys.reservemeapp.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +34,14 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 				int availableSeats = l.getAvailableSeats();
 				addTrainSeats(trainNum, totSeats, availableSeats);
 				System.out.println("Succesfully Train_lists added");
-			} catch (Exception e) {
-				throw new DbException(InfoMessages.INSERTION);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.TRAIN_INSERTION, e);
 		}
 	}
 
-	public void addTrainSeats(int trainNum, int totSeats, int availableSeats) throws DbException {
+	private void addTrainSeats(int trainNum, int totSeats, int availableSeats) throws DbException {
 		try (Connection con = TestConnection.connect();) {
 			String sql1 = "insert into seat_availabilities(train_num,tot_no_of_seats, no_of_seats_available) values(?,?,?)";
 			try (PreparedStatement pst1 = con.prepareStatement(sql1);) {
@@ -51,12 +50,10 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 				pst1.setInt(3, availableSeats);
 				pst1.executeUpdate();
 				System.out.println("Succesfully Train Seats added");
-			} catch (Exception e) {
-				throw new DbException(InfoMessages.INSERTION);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.TRAIN_SEATS_INSERTION, e);
 		}
 	}
 
@@ -64,35 +61,27 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		try (Connection con = TestConnection.connect();) {
 			String sql1 = "delete  from train_lists where train_num =?";
 			try (PreparedStatement pst = con.prepareStatement(sql1);) {
-				pst.setInt(1,trainNum);
-			pst.executeUpdate();
-			removeTrainSeats(trainNum);
+				pst.setInt(1, trainNum);
+				pst.executeUpdate();
+				removeTrainSeats(trainNum);
 			}
-			catch(Exception e) {
-				throw new DbException(InfoMessages.DELETETRAINS);
-			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
-
+			throw new DbException(InfoMessages.DELETE_TRAINS, e);
 		}
 
 	}
 
-	public void removeTrainSeats(int trainNum) throws DbException {
+	private void removeTrainSeats(int trainNum) throws DbException {
 		try (Connection con = TestConnection.connect();) {
 			String sql = "delete from seat_availabilities where train_num = ?";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
-				pst.setInt(1,trainNum);
-			pst.executeUpdate(sql);
-		}
-			catch(Exception e) {
-				throw new DbException(InfoMessages.DELETESEATS);
+				pst.setInt(1, trainNum);
+				pst.executeUpdate(sql);
 			}
-			
-		}catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.DELETE_SEATS, e);
 
 		}
 
@@ -106,12 +95,10 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 				pst.setInt(2, trainNum);
 				int rows = pst.executeUpdate();
 				System.out.println("Succesfully Train Lists updated" + rows);
-			} catch (Exception e) {
-				throw new DbException(InfoMessages.UPDATTION);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.TIME_UPDATAION, e);
 
 		}
 
@@ -121,22 +108,19 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		try (Connection con = TestConnection.connect();) {
 			String sql = "select distinct source_station from train_lists";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
-			ArrayList<String> sourceList = new ArrayList<String>();
-			try (ResultSet rs = pst.executeQuery(sql);) {
-				while (rs.next()) {
-					String a = rs.getString("source_station");
-					sourceList.add(a);
+				ArrayList<String> sourceList = new ArrayList<String>();
+				try (ResultSet rs = pst.executeQuery(sql);) {
+					while (rs.next()) {
+						String a = rs.getString("source_station");
+						sourceList.add(a);
+					}
+
+					return sourceList;
 				}
-
-				return sourceList;
-			}} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.SOURCE);
-
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.SOURCE, e);
 		}
 	}
 
@@ -144,23 +128,20 @@ public class AdminListOfTrainsImpl implements AdminListOfTrainsDAO {
 		try (Connection con = TestConnection.connect();) {
 			String sql = "select distinct destination_station from train_lists";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
-			ArrayList<String> destinationList = new ArrayList<String>();
-			try (ResultSet rs = pst.executeQuery(sql);) {
-				while (rs.next()) {
-					String a = rs.getString("destination_station");
-					destinationList.add(a);
+				ArrayList<String> destinationList = new ArrayList<String>();
+				try (ResultSet rs = pst.executeQuery(sql);) {
+					while (rs.next()) {
+						String a = rs.getString("destination_station");
+						destinationList.add(a);
+					}
+
+					return destinationList;
+
 				}
-
-				return destinationList;
-
-			}} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.DESTINATION);
-
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.DESTINATION, e);
 		}
 
 	}

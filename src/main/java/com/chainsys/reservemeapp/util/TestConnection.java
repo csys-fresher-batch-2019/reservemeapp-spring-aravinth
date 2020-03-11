@@ -4,18 +4,23 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.chainsys.reservemeapp.exception.DbException;
+import com.chainsys.reservemeapp.exception.InfoMessages;
+
 public class TestConnection {
-	public static Connection connect() throws SQLException {
+	public static Connection connect() throws SQLException, DbException {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String server = "13.235.147.120";
+			//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@" + server + ":1521:XE", "aravinth","aravinth");
+			 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system","oracle");
+			System.out.println(connection);
+			return connection;
 		} catch (ClassNotFoundException e) {
-			System.out.println(e);
+			e.printStackTrace();
+			throw new DbException(InfoMessages.CONNECTION, e);
+
 		}
-		String server = "13.235.147.120";
-		 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@" + server + ":1521:XE", "aravinth","aravinth");
-		//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "oracle");
-		System.out.println(connection);
-		return connection;
 
 	}
 }

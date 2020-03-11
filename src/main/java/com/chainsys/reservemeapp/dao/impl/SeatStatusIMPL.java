@@ -3,6 +3,7 @@ package com.chainsys.reservemeapp.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.chainsys.reservemeapp.dao.SeatStatusDAO;
 import com.chainsys.reservemeapp.exception.DbException;
@@ -18,13 +19,10 @@ public class SeatStatusIMPL implements SeatStatusDAO {
 				pst.setInt(2, trainNum);
 				pst.executeUpdate();
 				System.out.println("Successfully Available Seats Are Updated");
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.UPDATESEATS);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.UPDATESEATS, e);
 		}
 	}
 
@@ -40,13 +38,10 @@ public class SeatStatusIMPL implements SeatStatusDAO {
 					}
 					return seats;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.SHOWSEATS);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.SHOWSEATS, e);
 		}
 	}
 

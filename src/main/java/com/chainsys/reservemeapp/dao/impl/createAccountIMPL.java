@@ -3,6 +3,7 @@ package com.chainsys.reservemeapp.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.chainsys.reservemeapp.dao.createAccountDAO;
@@ -28,18 +29,15 @@ public class createAccountIMPL implements createAccountDAO {
 				String mailId = l.getMailId();
 				userId = showUserId(mailId);
 				System.out.println("Succesfully Account created");
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.ADDINGACCOUNT);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.ADDINGACCOUNT, e);
 		}
 		return userId;
 	}
 
-	public int showUserId(String mailId) throws DbException {
+	private int showUserId(String mailId) throws DbException {
 
 		try (Connection con = TestConnection.connect();) {
 			int userid = 0;
@@ -53,13 +51,10 @@ public class createAccountIMPL implements createAccountDAO {
 					}
 					return userid;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.ADDINGACCOUNT);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.ADDINGACCOUNT, e);
 		}
 	}
 
@@ -73,9 +68,9 @@ public class createAccountIMPL implements createAccountDAO {
 
 				return false;
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.EMAIL_CHECK, e);
 
 		}
 	}
@@ -91,15 +86,11 @@ public class createAccountIMPL implements createAccountDAO {
 					if (rows.next()) {
 						res = true;
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new DbException(InfoMessages.LOGIN);
 				}
-
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.LOGIN, e);
 		}
 		return res;
 	}
@@ -117,15 +108,11 @@ public class createAccountIMPL implements createAccountDAO {
 					} else {
 						return false;
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new DbException(InfoMessages.LOGIN);
 				}
-
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.CHECKDATA, e);
 		}
 		return res;
 	}
@@ -140,9 +127,9 @@ public class createAccountIMPL implements createAccountDAO {
 				System.out.println("Password changed succecfully");
 				return true;
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.PASSWORD_CHANGE, e);
 
 		}
 	}
@@ -160,9 +147,9 @@ public class createAccountIMPL implements createAccountDAO {
 					return false;
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.CHECK_PASSWORD, e);
 
 		}
 	}

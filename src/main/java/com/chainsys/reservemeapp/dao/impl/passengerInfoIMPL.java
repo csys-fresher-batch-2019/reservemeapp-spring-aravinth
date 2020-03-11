@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.chainsys.reservemeapp.dao.passengerInfoDAO;
@@ -24,7 +23,6 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 				pst.setLong(4, p1.getPhoneNumber());
 				pst.setInt(5, p1.getNoOfTickets());
 				pst.executeUpdate();
-
 				System.out.println("Succesfully Passenger details added...");
 				int trainNum = p1.getTrainNum();
 				int totTickets = p1.getNoOfTickets();
@@ -34,66 +32,51 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 				updatePaymentSts(trainNum, totTicketPrice, bookingId, userId);
 				con.close();
 				return bookingId;
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.ADDINGPASSENGER);
 			}
-
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.ADDINGPASSENGER, e);
 		}
 	}
 
 	private void updatePaymentSts(int trainNum, int totTicketPrice, int bookingId, int userId) throws DbException {
 		try (Connection con = TestConnection.connect();) {
-			//try (Statement stmt1 = con.createStatement();) {
-				String sql22 = "insert into payment_status(train_num,user_id,booking_id,tot_ticket_price)values(?,?,?,?)";
-				try (PreparedStatement pst = con.prepareStatement(sql22);) {
-					pst.setInt(1, trainNum);
-					pst.setInt(2, userId);
-					pst.setInt(3, bookingId);
-					pst.setInt(4, totTicketPrice);
+			String sql22 = "insert into payment_status(train_num,user_id,booking_id,tot_ticket_price)values(?,?,?,?)";
+			try (PreparedStatement pst = con.prepareStatement(sql22);) {
+				pst.setInt(1, trainNum);
+				pst.setInt(2, userId);
+				pst.setInt(3, bookingId);
+				pst.setInt(4, totTicketPrice);
 				pst.executeUpdate();
 				con.close();
-				// return bookingId;
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.ADDINGPASSENGER);
 			}
-
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
 		}
 
 	}
 
-	public int showBookingId(int userId) throws DbException {
+	private int showBookingId(int userId) throws DbException {
 		int bookingId = 0;
 		try (Connection con = TestConnection.connect();) {
-				String sql1 = "select max(booking_id) as id from passenger_details where user_id =?";
-				try (PreparedStatement pst = con.prepareStatement(sql1);) {
-					pst.setInt(1, userId);
+			String sql1 = "select max(booking_id) as id from passenger_details where user_id =?";
+			try (PreparedStatement pst = con.prepareStatement(sql1);) {
+				pst.setInt(1, userId);
 				try (ResultSet rows = pst.executeQuery();) {
 					rows.next();
 					bookingId = rows.getInt("id");
 					con.close();
-					// return bookingId;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.ADDINGPASSENGER);
 			}
-
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.BOOKING_ID, e);
 		}
 		return bookingId;
 	}
 
-	public int showTicketPrice(int trainNum, int totTickets) throws DbException {
+	private int showTicketPrice(int trainNum, int totTickets) throws DbException {
 		int totTicketPrice = 0;
 		try (Connection con = TestConnection.connect();) {
 			String sql3 = "select ticket_price from train_lists where train_num =?";
@@ -106,14 +89,10 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 					totTicketPrice = cost * totTickets;
 					con.close();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.ADDINGPASSENGER);
 			}
-
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.TICKET_PRICE, e);
 		}
 		return totTicketPrice;
 	}
@@ -138,13 +117,10 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 					}
 					return details;
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.BOOKINGS);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.BOOKINGS, e);
 		}
 	}
 
@@ -161,13 +137,10 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 					}
 					return price;
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.PRICE);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.PRICE, e);
 		}
 	}
 
@@ -190,13 +163,10 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 						return false;
 					}
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.BOOKINGIDCHECK);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.BOOKINGIDCHECK, e);
 		}
 
 	}
@@ -220,15 +190,11 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 					}
 
 				}
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-				throw new DbException(InfoMessages.INVALIDTRAINNUM);
 			}
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.INVALIDTRAINNUM, e);
 		}
 
 	}
@@ -253,14 +219,10 @@ public class passengerInfoIMPL implements passengerInfoDAO {
 					}
 					return details;
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.BOOKINGS);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.BOOKINGS, e);
 		}
 
 	}

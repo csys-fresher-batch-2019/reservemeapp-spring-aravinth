@@ -3,6 +3,7 @@ package com.chainsys.reservemeapp.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.chainsys.reservemeapp.dao.findTrainDAO;
@@ -41,13 +42,10 @@ public class findTrainIMPL implements findTrainDAO {
 					}
 				}
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DbException(InfoMessages.FINDTRAIN);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(InfoMessages.CONNECTION);
+			throw new DbException(InfoMessages.FINDTRAIN, e);
 		}
 
 		return trains;
