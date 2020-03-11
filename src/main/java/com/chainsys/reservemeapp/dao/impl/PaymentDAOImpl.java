@@ -13,11 +13,13 @@ import com.chainsys.reservemeapp.util.InfoMessages;
 public class PaymentDAOImpl implements PaymentDAO {
 
 	@Override
-	public boolean paymentSuccess(int bookingId) throws DbException {
+	public boolean paymentSuccess(int bookingId,String paySts,String paymentMode) throws DbException {
 		try (Connection con = ConnectionUtil.connect();) {
-			String sql = "update payment_status set pay_status ='paid',payment_mode='creditcard' where booking_id = ?  ";
+			String sql = "update payment_status set pay_status =?,payment_mode=? where booking_id = ?  ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
-				pst.setInt(1, bookingId);
+				pst.setString(1, paySts);
+				pst.setString(2, paymentMode);
+				pst.setInt(3, bookingId);
 				pst.executeUpdate();
 				updateBookStatus(bookingId);
 				updateSeatStatus(bookingId);
@@ -112,10 +114,7 @@ public class PaymentDAOImpl implements PaymentDAO {
 	}
 
 	@Override
-	public boolean cashPay(int bookingId, String paymentMode) throws DbException {
-
-		System.out.println("Payment Mode:" + paymentMode);
-		String paymentStatus = "pending";
+	public boolean cashPay(int bookingId, String paymentMode,String paymentStatus) throws DbException {
 		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "update payment_status set pay_status =?, payment_mode=? where booking_id = ?  ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {

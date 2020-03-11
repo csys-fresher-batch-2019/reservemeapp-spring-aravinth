@@ -12,9 +12,9 @@ import com.chainsys.reservemeapp.util.InfoMessages;
 public class PaymentService {
 	PaymentDAO obj = new PaymentDAOImpl();
 
-	public boolean paymentSuccess(int bookingId) throws ServiceException {
+	public boolean paymentSuccess(int bookingId,String PaySts,String PaymentMode) throws ServiceException {
 		try {
-			return obj.paymentSuccess(bookingId);
+			return obj.paymentSuccess(bookingId,PaySts,PaymentMode);
 		} catch (DbException e) {
 			e.printStackTrace();
 			throw new ServiceException(InfoMessages.UPDATE_PAYMENT, e);
@@ -39,9 +39,9 @@ public class PaymentService {
 		}
 	}
 
-	public boolean cashPay(int bookingId, String paymentMode) throws ServiceException {
+	public boolean cashPay(int bookingId, String paymentMode,String paymentStatus) throws ServiceException {
 		try {
-			return obj.cashPay(bookingId, paymentMode);
+			return obj.cashPay(bookingId, paymentMode,paymentStatus);
 		} catch (DbException e) {
 			e.printStackTrace();
 			throw new ServiceException(InfoMessages.UPDATE_PAYMENT, e);
