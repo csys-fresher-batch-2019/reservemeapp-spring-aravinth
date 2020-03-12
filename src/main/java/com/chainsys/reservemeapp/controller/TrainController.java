@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chainsys.reservemeapp.dao.TrainDtoDAO;
-import com.chainsys.reservemeapp.dao.impl.TrainDtoDAOImpl;
+import com.chainsys.reservemeapp.dao.TrainDTO;
+import com.chainsys.reservemeapp.dao.impl.TrainDTOImpl;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.model.TrainDto;
 
@@ -21,7 +21,7 @@ public class TrainController {
 	@GetMapping("/trains")
 	public ArrayList<TrainDto> list(@RequestParam("source") String source,
 			@RequestParam("destination") String destination, @RequestParam("journeyDate") String journeyDate) {
-		TrainDtoDAO dao = new TrainDtoDAOImpl();
+		TrainDTO dao = new TrainDTOImpl();
 		ArrayList<TrainDto> list = null;
 		try {
 			list = dao.searchTrains(source, destination, journeyDate);

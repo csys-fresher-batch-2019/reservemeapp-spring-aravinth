@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.chainsys.reservemeapp.dao.TrainDtoDAO;
+import com.chainsys.reservemeapp.dao.TrainDTO;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.model.TrainDto;
 import com.chainsys.reservemeapp.util.ConnectionUtil;
 import com.chainsys.reservemeapp.util.InfoMessages;
 
-public class TrainDtoDAOImpl implements TrainDtoDAO {
+public class TrainDTOImpl implements TrainDTO {
 
 	public ArrayList<TrainDto> searchTrains(String sourceStation, String destinationStation, String journeyDate)
 			throws DbException {

@@ -2,8 +2,8 @@
 
 <%@page import="com.chainsys.reservemeapp.model.TrainDto"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.chainsys.reservemeapp.dao.impl.TrainDtoDAOImpl"%>
-<%@page import="com.chainsys.reservemeapp.dao.TrainDtoDAO"%>
+<%@page import="com.chainsys.reservemeapp.dao.impl.TrainDTOImpl"%>
+<%@page import="com.chainsys.reservemeapp.dao.TrainDTO"%>
 <%@page import="com.chainsys.reservemeapp.dao.TrainsDAO"%>
 
 <!DOCTYPE html>
