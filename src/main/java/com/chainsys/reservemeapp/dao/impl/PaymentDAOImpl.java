@@ -13,7 +13,7 @@ import com.chainsys.reservemeapp.util.InfoMessages;
 public class PaymentDAOImpl implements PaymentDAO {
 
 	@Override
-	public boolean paymentSuccess(int bookingId,String paySts,String paymentMode) throws DbException {
+	public boolean paymentMethod(int bookingId, String paySts, String paymentMode) throws DbException {
 		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "update payment_status set pay_status =?,payment_mode=? where booking_id = ?  ";
 			try (PreparedStatement pst = con.prepareStatement(sql);) {
@@ -60,36 +60,7 @@ public class PaymentDAOImpl implements PaymentDAO {
 		return false;
 	}
 
-	@Override
-	public boolean paymentFailure(int bookingId) throws DbException {
-		try (Connection con = ConnectionUtil.connect();) {
-			String sql3 = "update payment_status  set pay_status = 'failure' where booking_id =?";
-			try (PreparedStatement pst = con.prepareStatement(sql3);) {
-				pst.setInt(1, bookingId);
-				pst.executeUpdate();
-				paymentFailureUpdate(bookingId);
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
-		}
-		return false;
-	}
-
-	private void paymentFailureUpdate(int bookingId) throws DbException {
-		try (Connection con = ConnectionUtil.connect();) {
-			String sql4 = "update passenger_details set booking_status = 'cancelled' where booking_id = ?";
-			try (PreparedStatement pst = con.prepareStatement(sql4);) {
-				pst.setInt(1, bookingId);
-				pst.executeUpdate();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
-		}
-	}
-
+	// For payment failure method pay_sts = 'failure' and book_sts = 'cancelled';
 	@Override
 	public int totTicketPrice(int bookingId) throws DbException {
 		try (Connection con = ConnectionUtil.connect();) {
@@ -111,25 +82,6 @@ public class PaymentDAOImpl implements PaymentDAO {
 
 		}
 
-	}
-
-	@Override
-	public boolean cashPay(int bookingId, String paymentMode,String paymentStatus) throws DbException {
-		try (Connection con = ConnectionUtil.connect();) {
-			String sql = "update payment_status set pay_status =?, payment_mode=? where booking_id = ?  ";
-			try (PreparedStatement pst = con.prepareStatement(sql);) {
-				pst.setString(1, paymentStatus);
-				pst.setString(2, paymentMode);
-				pst.setInt(3, bookingId);
-				int rows = pst.executeUpdate();
-				updateBookStatus(bookingId);
-				updateSeatStatus(bookingId);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DbException(InfoMessages.UPDATE_PAYMENT, e);
-		}
-		return false;
 	}
 
 }

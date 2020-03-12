@@ -28,7 +28,7 @@ public class UpdationServlet extends HttpServlet {
 		String paymentMode = "cash";
 		String paymentStatus = "pending";
 		try {
-			dao.cashPay(bookingId, paymentMode,paymentStatus);
+			dao.paymentMethod(bookingId, paymentStatus, paymentMode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

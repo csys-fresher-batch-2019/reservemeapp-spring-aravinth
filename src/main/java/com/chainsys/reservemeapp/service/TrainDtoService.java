@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import com.chainsys.reservemeapp.dao.FindTrainDAO;
-import com.chainsys.reservemeapp.dao.impl.FindTrainDAOImpl;
+import com.chainsys.reservemeapp.dao.TrainDtoDAO;
+import com.chainsys.reservemeapp.dao.impl.TrainDtoDAOImpl;
 import com.chainsys.reservemeapp.exception.DbException;
 import com.chainsys.reservemeapp.exception.ServiceException;
-import com.chainsys.reservemeapp.model.FindTrain;
+import com.chainsys.reservemeapp.model.TrainDto;
 import com.chainsys.reservemeapp.util.InfoMessages;
 
 @Service
-public class FindTrainService {
-	FindTrainDAO obj = new FindTrainDAOImpl();
+public class TrainDtoService {
+	TrainDtoDAO obj = new TrainDtoDAOImpl();
 
-	public ArrayList<FindTrain> SearchTrain(String sourceStation, String destinationStation, String journeyDate) throws ServiceException {
+	public ArrayList<TrainDto> SearchTrain(String sourceStation, String destinationStation, String journeyDate) throws ServiceException {
 		try {
 			return obj.searchTrains(sourceStation, destinationStation, journeyDate);
 		} catch (DbException e) {

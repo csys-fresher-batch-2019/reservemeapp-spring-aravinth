@@ -32,7 +32,7 @@ public class PaymentServlet extends HttpServlet {
 			PaymentService dao = new PaymentService();
 			String paySts = "paid";
 			String paymentMode = "creditcard";
-			dao.paymentSuccess(bookingId,paySts,paymentMode);
+			dao.paymentMethod(bookingId,paySts,paymentMode);
 			response.sendRedirect("index.jsp");
 
 		} catch (Exception e) {

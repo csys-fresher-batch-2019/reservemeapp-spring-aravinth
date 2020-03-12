@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@page import="com.chainsys.reservemeapp.model.FindTrain"%>
+<%@page import="com.chainsys.reservemeapp.model.TrainDto"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.chainsys.reservemeapp.dao.impl.FindTrainDAOImpl"%>
-<%@page import="com.chainsys.reservemeapp.dao.FindTrainDAO"%>
+<%@page import="com.chainsys.reservemeapp.dao.impl.TrainDtoDAOImpl"%>
+<%@page import="com.chainsys.reservemeapp.dao.TrainDtoDAO"%>
 <%@page import="com.chainsys.reservemeapp.dao.TrainsDAO"%>
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
 <br/>
 
 <%
-	ArrayList<FindTrain> list= (ArrayList <FindTrain>)request.getAttribute("trainList");
+	ArrayList<TrainDto> list= (ArrayList <TrainDto>)request.getAttribute("trainList");
 %>
 
 
@@ -42,7 +42,7 @@ if(list.size()>0){
 <thead><tr><th>S.no</th> <th> Train Name </th><th>Train Num </th><th>Ticket Price </th><th>Travelling time</th><th>View Availability</th></tr></thead>
 <tbody></h2>
 <%
-	for(FindTrain f : list){
+	for(TrainDto f : list){
 %>
 
 <tr><td><%=i++ %></td>

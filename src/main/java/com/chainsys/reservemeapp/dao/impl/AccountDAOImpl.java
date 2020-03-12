@@ -57,20 +57,22 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	public boolean checkEmail(String mail) throws DbException {
+		boolean res = false;
 		try (Connection con = ConnectionUtil.connect();) {
 			String sql = "select mail_id from user_account where mail_id =?";
 			try (PreparedStatement pst1 = con.prepareStatement(sql);) {
-				if (pst1.executeUpdate() == 0) {
-					return true;
+				pst1.setString(1, mail);
+				try (ResultSet rows = pst1.executeQuery();) {
+					if (rows.next()) {
+						res = true;
+					}
 				}
-
-				return false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DbException(InfoMessages.EMAIL_CHECK, e);
-
 		}
+		return res;
 	}
 
 	public boolean checkLogin(int userId, String Password) throws DbException {

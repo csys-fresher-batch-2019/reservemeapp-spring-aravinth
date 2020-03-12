@@ -1,6 +1,6 @@
 package com.chainsys.reservemeapp.model;
 
-public class FindTrain {
+public class TrainDto {
 	private int trainNum;
 	private String trainName;
 	private int price;
@@ -47,7 +47,7 @@ public class FindTrain {
 		this.travellingTime = travelling_time;
 	}
 
-	public FindTrain(int train_num, String train_name, int price, String travelling_time) {
+	public TrainDto(int train_num, String train_name, int price, String travelling_time) {
 		super();
 		this.trainNum = train_num;
 		this.trainName = train_name;
@@ -55,7 +55,7 @@ public class FindTrain {
 		this.travellingTime = travelling_time;
 	}
 
-	public FindTrain() {
+	public TrainDto() {
 		// TODO Auto-generated constructor stub
 	}
 
