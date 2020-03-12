@@ -16,14 +16,16 @@ import com.chainsys.reservemeapp.model.Account;
 @RequestMapping("api")
 public class RegisterController {
 	@PostMapping("/adduser")
-	public void addUser(@RequestBody Account a) {
+	public int addUser(@RequestBody Account a) {
+		int userId = 0;
 		AccountDAO dao = new AccountDAOImpl();
 		try {
-			dao.addUser(a);
+			userId = dao.addUser(a);
 		} catch (DbException e) {
 			e.printStackTrace();
 		}
-		
+		return userId;
+
 	}
-	
+
 }
